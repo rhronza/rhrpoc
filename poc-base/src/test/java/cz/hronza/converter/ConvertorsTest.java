@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class ToDtoTest {
+class ConvertorsTest {
 
     private static final String ROMAN = "Roman";
     private static final String HRONZA = "Hronza";
