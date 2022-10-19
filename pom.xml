@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!--    implicitní verze knihoven s neuvedenými verzemi pro spring boot 2.4.1: -->
+    <!--    https://docs.spring.io/spring-boot/docs/2.0.x/reference/html/appendix-dependency-versions.html-->
+
+    <groupId>cz.hronza</groupId>
+    <artifactId>rhrpoc</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    
+    <description>rhrpoc</description>
+
+    <modules>
+        <module>poc-base</module>
+        <module>poc-boot</module>
+        <module>poc-business-logic</module>
+        <module>poc-persistence</module>
+        <module>rest-api</module>
+    </modules>
+    
+    <properties>
+        <java.version>11</java.version>
+        <spring-boot-starter-actuator.version>2.4.1</spring-boot-starter-actuator.version>
+        <project.version>0.0.1-SNAPSHOT</project.version>
+
+    </properties>
+
+
+
+    <packaging>pom</packaging>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>cz.hronza</groupId>
+                <artifactId>poc-base</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!--            SPRING BOOT ACTUATOR-->
+            <!--            https://springframework.guru/actuator-in-spring-boot/-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring-boot-starter-actuator.version}</version>
+            </dependency>
+
+            
+
+        </dependencies>
+    </dependencyManagement>
+    
+</project>
