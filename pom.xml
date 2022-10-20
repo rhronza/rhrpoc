@@ -46,6 +46,7 @@
     <dependencyManagement>
         <dependencies>
 
+            <!-- INNER DEPENDENCY - na poc-boot není dependency !!a pokud by byl modul db, tak na ten také NE -->
             <dependency>
                 <groupId>cz.hronza</groupId>
                 <artifactId>poc-base</artifactId>
