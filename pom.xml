@@ -21,7 +21,7 @@
 
     <modules>
         <module>poc-base</module>
-        <!-- na poc-boot není dependency !!a pokud by byl modul db, tak na ten také NE -->
+        <!-- na poc-boot není vložená dependency !!a pokud by byl modul db, tak na ten také NE -->
         <module>poc-boot</module>
         <module>poc-business-logic</module>
         <module>poc-persistence</module>
@@ -38,7 +38,6 @@
         <jackson-databind-nullable.version>0.1.0</jackson-databind-nullable.version>
         <log4jdbc.vesrion>1.16</log4jdbc.vesrion>
         <jacoco.version>0.8.6</jacoco.version>
-
     </properties>
 
 
@@ -96,7 +95,7 @@
             </dependency>
 
 
-            <!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
+            <!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 (dapp) -->
             <dependency>
                 <groupId>org.bgee.log4jdbc-log4j2</groupId>
                 <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
@@ -127,6 +126,8 @@
                 <version>${jackson-databind-nullable.version}</version>
             </dependency>
         </dependencies>
+
+        
     </dependencyManagement>
 
     <build>
@@ -141,10 +142,35 @@
             </plugins>
         </pluginManagement>
 
+        <!--        JDZ v DAF-->
+        <plugins>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
+            <!--            COL v parent pom-->
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-surefire-plugin</artifactId>-->
+            <!--                <version>2.22.2</version>-->
+            <!--                <configuration>-->
+            <!--                    <systemPropertyVariables>-->
+            <!--                        <hazelcast.cofing>classpath:hazelcast-test.yaml</hazelcast.cofing>-->
+            <!--                    </systemPropertyVariables>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
 
-
+        </plugins>
     </build>
-
 </project>
