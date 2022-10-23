@@ -10,7 +10,7 @@
     </parent>
     
 
-    <artifactId>rest-api</artifactId>
+    <artifactId>poc-rest-api</artifactId>
 
     <name>rest-api</name>
     <description>rest-api</description>

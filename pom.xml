@@ -25,7 +25,7 @@
         <module>poc-boot</module>
         <module>poc-business-logic</module>
         <module>poc-persistence</module>
-        <module>rest-api</module>
+        <module>poc-rest-api</module>
     </modules>
 
     <properties>

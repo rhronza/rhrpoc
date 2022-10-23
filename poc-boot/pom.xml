@@ -15,8 +15,7 @@
         <!--        REST API-->
        <dependency>
            <groupId>cz.hronza</groupId>
-           <artifactId>rest-api</artifactId>
-           <version>0.0.1-SNAPSHOT</version>
+           <artifactId>poc-rest-api</artifactId>
        </dependency>
 
         <!--       SPRING -->
