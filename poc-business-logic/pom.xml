@@ -10,6 +10,13 @@
     </parent>
 
     <artifactId>poc-business-logic</artifactId>
+    <dependencies>
+        <!-- @Service, @NonNull, apod -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+    </dependencies>
 
     <modelVersion>4.0.0</modelVersion>
 
