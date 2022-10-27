@@ -3,7 +3,7 @@ package cz.hronza.business_logic;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OperationImpl implements Operation {
+public class OperationServiceImpl implements OperationService {
     @Override
     public int sum(Integer a, Integer b) {
         return a + b;

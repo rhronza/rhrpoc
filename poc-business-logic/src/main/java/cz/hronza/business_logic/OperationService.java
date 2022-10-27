@@ -1,8 +1,11 @@
 package cz.hronza.business_logic;
 
+import org.springframework.validation.annotation.Validated;
+
 import javax.validation.constraints.NotNull;
 
-public interface Operation {
+@Validated
+public interface OperationService {
     /**
      *
      * @param a   int number
