@@ -16,7 +16,11 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public int divide(Integer a, Integer b) {
-        return a / b;
+        if (b != 0)
+            return a / b;
+        else
+            // vyhoď vlastní výjimku
+            return Integer.MIN_VALUE;
     }
 
     @Override
