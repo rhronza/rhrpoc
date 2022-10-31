@@ -20,6 +20,8 @@ public class CalculationFacadeImplTest {
     private static final int SUM_EXPECTED = 35;
     private static final int DIVIDE_EXPECTED = 18;
 
+    private static final int DIFFERENCE_EXPECTED = 33;
+
     @Mock
     private OperationServiceImpl operationServiceImpl;
 
@@ -35,8 +37,15 @@ public class CalculationFacadeImplTest {
 
     @Test
     void calculateDivideTest() {
-        when(operationServiceImpl.divide(any(), any())).thenReturn(DIVIDE_EXPECTED);
+        when(operationServiceImpl.difference(any(), any())).thenReturn(DIVIDE_EXPECTED);
         int calculate = calculationFacade.calculate(A, B, OperationsEnum.DIVIDE);
         assertEquals(DIVIDE_EXPECTED, calculate);
+    }
+
+    @Test
+    void calculateDifferenceTest() {
+        when(operationServiceImpl.difference(A, B)).thenReturn(DIFFERENCE_EXPECTED);
+        int calculate = calculationFacade.calculate(A, B, OperationsEnum.DIFFERENCE);
+        assertEquals(DIFFERENCE_EXPECTED, calculate);
     }
 }
