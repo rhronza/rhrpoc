@@ -1,7 +1,6 @@
 package cz.hronza.business_logic.service;
 
-import cz.hronza.business_logic.CalculationFacadeImpl;
-import cz.hronza.business_logic.OperationServiceImpl;
+import cz.hronza.business_logic.facade.CalculationFacadeImpl;
 import cz.hronza.business_logic.enumer.OperationsEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +36,7 @@ public class CalculationFacadeImplTest {
 
     @Test
     void calculateDivideTest() {
-        when(operationServiceImpl.difference(any(), any())).thenReturn(DIVIDE_EXPECTED);
+        when(operationServiceImpl.divide(any(), any())).thenReturn(DIVIDE_EXPECTED);
         int calculate = calculationFacade.calculate(A, B, OperationsEnum.DIVIDE);
         assertEquals(DIVIDE_EXPECTED, calculate);
     }
