@@ -1,5 +1,6 @@
-package cz.hronza.business_logic;
+package cz.hronza.business_logic.facade;
 
+import cz.hronza.business_logic.service.OperationService;
 import cz.hronza.business_logic.enumer.OperationsEnum;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package cz.hronza.business_logic;
+package cz.hronza.business_logic.service;
 
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class OperationServiceImpl implements OperationService {
         if (b != 0)
             return a / b;
         else
-            // vyhoď vlastní výjimku
+            // TODO vyhoď vlastní výjimku
             return Integer.MIN_VALUE;
     }
 

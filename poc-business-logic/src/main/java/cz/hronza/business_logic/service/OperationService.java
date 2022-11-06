@@ -1,4 +1,4 @@
-package cz.hronza.business_logic;
+package cz.hronza.business_logic.service;
 
 import org.springframework.validation.annotation.Validated;
 

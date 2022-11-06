@@ -1,4 +1,4 @@
-package cz.hronza.business_logic;
+package cz.hronza.business_logic.facade;
 
 import cz.hronza.business_logic.enumer.OperationsEnum;
 
