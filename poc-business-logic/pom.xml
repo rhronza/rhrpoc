@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>poc-business-logic</artifactId>
+    
     <dependencies>
         <!-- @Service, @NonNull, apod -->
         <dependency>
@@ -20,6 +21,11 @@
         <dependency>
             <groupId>cz.hronza</groupId>
             <artifactId>poc-persistence</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cz.hronza</groupId>
+            <artifactId>poc-base</artifactId>
         </dependency>
 
         <!-- TEST DEPENDENCIES -->
