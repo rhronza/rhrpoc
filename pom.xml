@@ -39,6 +39,7 @@
         <jackson-databind-nullable.version>0.1.0</jackson-databind-nullable.version>
         <log4jdbc.vesrion>1.16</log4jdbc.vesrion>
         <jacoco.version>0.8.6</jacoco.version>
+        <springdoc-openapi-ui.version>1.4.8</springdoc-openapi-ui.version>
     </properties>
 
 
@@ -46,7 +47,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <!-- INNER DEPENDENCY - na poc-boot není dependency !!a pokud by byl modul db, tak na ten také NE -->
             <dependency>
                 <groupId>cz.hronza</groupId>
@@ -78,9 +78,6 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!--            závislosti na core knihovy -->
-
-
             <!--            SPRING BOOT ACTUATOR-->
             <!--            https://springframework.guru/actuator-in-spring-boot/-->
             <dependency>
@@ -89,7 +86,7 @@
                 <version>${spring-boot-starter-actuator.version}</version>
             </dependency>
 
-            <!--   SWAGGER -->
+<!--               SWAGGER-->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
@@ -98,7 +95,7 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${swagger.version}</version>
+                <version>${springdoc-openapi-ui.version}</version>
             </dependency>
 
 
@@ -142,7 +139,7 @@
             </dependency>
         </dependencies>
 
-        
+
     </dependencyManagement>
 
     <build>
@@ -154,38 +151,38 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco.version}</version>
                 </plugin>
+<!--            </plugins>-->
+
+            <!--        JDZ v DAF-->
+<!--            <plugins>-->
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!--            COL v parent pom-->
+                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+                <!--            <plugin>-->
+                <!--                <groupId>org.apache.maven.plugins</groupId>-->
+                <!--                <artifactId>maven-surefire-plugin</artifactId>-->
+                <!--                <version>2.22.2</version>-->
+                <!--                <configuration>-->
+                <!--                    <systemPropertyVariables>-->
+                <!--                        <hazelcast.cofing>classpath:hazelcast-test.yaml</hazelcast.cofing>-->
+                <!--                    </systemPropertyVariables>-->
+                <!--                </configuration>-->
+                <!--            </plugin>-->
+
             </plugins>
         </pluginManagement>
-
-        <!--        JDZ v DAF-->
-        <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--            COL v parent pom-->
-            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-            <!--            <plugin>-->
-            <!--                <groupId>org.apache.maven.plugins</groupId>-->
-            <!--                <artifactId>maven-surefire-plugin</artifactId>-->
-            <!--                <version>2.22.2</version>-->
-            <!--                <configuration>-->
-            <!--                    <systemPropertyVariables>-->
-            <!--                        <hazelcast.cofing>classpath:hazelcast-test.yaml</hazelcast.cofing>-->
-            <!--                    </systemPropertyVariables>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
-
-        </plugins>
     </build>
-</project>
+    </project>
