@@ -18,7 +18,20 @@
     <properties>
         <java.version>11</java.version>
     </properties>
+
+
     <dependencies>
+
+        <dependency>
+            <groupId>cz.hronza</groupId>
+            <artifactId>poc-base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cz.hronza</groupId>
+            <artifactId>poc-business-logic</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
