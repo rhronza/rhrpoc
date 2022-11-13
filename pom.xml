@@ -13,7 +13,7 @@
     <!--    implicitní verze knihoven s neuvedenými verzemi pro spring boot 2.4.1: -->
     <!--    https://docs.spring.io/spring-boot/docs/2.0.x/reference/html/appendix-dependency-versions.html-->
 
-    <groupId>cz.hronza</groupId>
+    <groupId>cz.hronza.rhrpoc</groupId>
     <artifactId>rhrpoc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 

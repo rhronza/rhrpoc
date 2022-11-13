@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>cz.hronza</groupId>
+        <groupId>cz.hronza.rhrpoc</groupId>
         <artifactId>rhrpoc</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
