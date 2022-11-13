@@ -19,7 +19,7 @@
     
     <dependencies>
         <dependency>
-            <groupId>cz.hronza</groupId>
+            <groupId>cz.hronza.rhrpoc</groupId>
             <artifactId>poc-persistence-db</artifactId>
         </dependency>
 

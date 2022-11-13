@@ -49,31 +49,31 @@
         <dependencies>
             <!-- INNER DEPENDENCY - na poc-boot není dependency !!a pokud by byl modul db, tak na ten také NE -->
             <dependency>
-                <groupId>cz.hronza</groupId>
+                <groupId>cz.hronza.rhrpoc</groupId>
                 <artifactId>poc-base</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>cz.hronza</groupId>
+                <groupId>cz.hronza.rhrpoc</groupId>
                 <artifactId>poc-business-logic</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>cz.hronza</groupId>
+                <groupId>cz.hronza.rhrpoc</groupId>
                 <artifactId>poc-persistence</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>cz.hronza</groupId>
+                <groupId>cz.hronza.rhrpoc</groupId>
                 <artifactId>poc-persistence-db</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>cz.hronza</groupId>
+                <groupId>cz.hronza.rhrpoc</groupId>
                 <artifactId>poc-rest-api</artifactId>
                 <version>${project.version}</version>
             </dependency>

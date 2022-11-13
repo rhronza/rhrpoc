@@ -23,12 +23,12 @@
     <dependencies>
 
         <dependency>
-            <groupId>cz.hronza</groupId>
+            <groupId>cz.hronza.rhrpoc</groupId>
             <artifactId>poc-base</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>cz.hronza</groupId>
+            <groupId>cz.hronza.rhrpoc</groupId>
             <artifactId>poc-business-logic</artifactId>
         </dependency>
 

@@ -19,12 +19,12 @@
         </dependency>
 
         <dependency>
-            <groupId>cz.hronza</groupId>
+            <groupId>cz.hronza.rhrpoc</groupId>
             <artifactId>poc-persistence</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>cz.hronza</groupId>
+            <groupId>cz.hronza.rhrpoc</groupId>
             <artifactId>poc-base</artifactId>
         </dependency>
 
