@@ -3,8 +3,7 @@ package cz.hronza.rhrpoc.restapi.dto;
 import cz.hronza.rhrpoc.business_logic.enumer.OperationsEnum;
 
 public class ResultDto {
-    private Integer variableA;
-    private Integer variableB;
+
     private OperationsEnum operationsEnum;
     private String result;
 
@@ -18,25 +17,7 @@ public class ResultDto {
         return this;
     }
 
-    public Integer getVariableA() {
-        return variableA;
-    }
-
-    public ResultDto setVariableA(Integer variableA) {
-        this.variableA = variableA;
-        return this;
-    }
-
-    public Integer getVariableB() {
-        return variableB;
-    }
-
-    public ResultDto setVariableB(Integer variableB) {
-        this.variableB = variableB;
-        return this;
-    }
-
-    public OperationsEnum getOperationsEnum() {
+       public OperationsEnum getOperationsEnum() {
         return operationsEnum;
     }
 

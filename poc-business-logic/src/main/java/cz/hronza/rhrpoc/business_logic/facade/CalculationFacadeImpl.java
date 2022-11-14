@@ -1,5 +1,6 @@
 package cz.hronza.rhrpoc.business_logic.facade;
 
+import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.service.OperationService;
 import cz.hronza.rhrpoc.business_logic.enumer.OperationsEnum;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class CalculationFacadeImpl implements CalculationFacade {
     }
 
     @Override
-    public int calculate(Integer a, Integer b, OperationsEnum operationsEnum) {
+    public Result calculate(Integer a, Integer b, OperationsEnum operationsEnum) {
         int result = 99;
         switch (operationsEnum) {
             case SUM:
@@ -30,6 +31,6 @@ public class CalculationFacadeImpl implements CalculationFacade {
                 result = operationService.multiplication(a, b);
                 break;
         }
-        return result;
+        return new Result().setVarA(a).setVarB(b).setOperationsEnum(operationsEnum).setResult( result);
     }
 }

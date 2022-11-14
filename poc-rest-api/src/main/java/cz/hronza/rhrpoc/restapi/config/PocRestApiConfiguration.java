@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan(basePackageClasses = PocRestApiPackage.class)
-@Import(value = PocBusinessLogicConfiguration.class)
+@Import(value = PocBusinessLogicConfiguration.class )
 public class PocRestApiConfiguration {
     
 }
