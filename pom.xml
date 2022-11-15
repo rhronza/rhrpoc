@@ -78,6 +78,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>cz.hronza.rhrpoc-core</groupId>
+                <artifactId>rhrpoc-core</artifactId>
+                <version>0.0.2-SNAPSHOT</version>
+            </dependency>
+
             <!--            SPRING BOOT ACTUATOR-->
             <!--            https://springframework.guru/actuator-in-spring-boot/-->
             <dependency>
