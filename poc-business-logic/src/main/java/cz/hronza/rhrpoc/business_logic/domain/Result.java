@@ -1,6 +1,7 @@
 package cz.hronza.rhrpoc.business_logic.domain;
 
-import cz.hronza.rhrpoc.business_logic.enumer.OperationsEnum;
+
+import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 
 public class Result {
 

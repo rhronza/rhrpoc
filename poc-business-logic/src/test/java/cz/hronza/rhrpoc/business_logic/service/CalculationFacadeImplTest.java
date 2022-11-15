@@ -2,7 +2,7 @@ package cz.hronza.rhrpoc.business_logic.service;
 
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacadeImpl;
-import cz.hronza.rhrpoc.business_logic.enumer.OperationsEnum;
+import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

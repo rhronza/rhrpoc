@@ -2,7 +2,8 @@ package cz.hronza.rhrpoc.business_logic.facade;
 
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.service.OperationService;
-import cz.hronza.rhrpoc.business_logic.enumer.OperationsEnum;
+
+import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,4 +34,6 @@ public class CalculationFacadeImpl implements CalculationFacade {
         }
         return new Result().setVarA(a).setVarB(b).setOperationsEnum(operationsEnum).setResult( result);
     }
+
+    
 }
