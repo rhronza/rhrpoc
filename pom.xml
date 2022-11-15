@@ -86,7 +86,7 @@
                 <version>${spring-boot-starter-actuator.version}</version>
             </dependency>
 
-<!--               SWAGGER-->
+            <!--               SWAGGER-->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
@@ -151,10 +151,10 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco.version}</version>
                 </plugin>
-<!--            </plugins>-->
+                <!--            </plugins>-->
 
-            <!--        JDZ v DAF-->
-<!--            <plugins>-->
+                <!--        JDZ v DAF-->
+                <!--            <plugins>-->
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -185,4 +185,4 @@
             </plugins>
         </pluginManagement>
     </build>
-    </project>
+</project>
