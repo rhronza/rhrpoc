@@ -78,6 +78,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>cz.hronza.core.rhrpoc</groupId>
+                <artifactId>rhrpoc-core-common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
             <!--            SPRING BOOT ACTUATOR-->
             <!--            https://springframework.guru/actuator-in-spring-boot/-->
             <dependency>
@@ -171,16 +177,16 @@
 
                 <!--            COL v parent pom-->
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-                <!--            <plugin>-->
-                <!--                <groupId>org.apache.maven.plugins</groupId>-->
-                <!--                <artifactId>maven-surefire-plugin</artifactId>-->
-                <!--                <version>2.22.2</version>-->
-                <!--                <configuration>-->
-                <!--                    <systemPropertyVariables>-->
-                <!--                        <hazelcast.cofing>classpath:hazelcast-test.yaml</hazelcast.cofing>-->
-                <!--                    </systemPropertyVariables>-->
-                <!--                </configuration>-->
-                <!--            </plugin>-->
+<!--                            <plugin>-->
+<!--                                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                                <version>2.22.2</version>-->
+<!--                                <configuration>-->
+<!--                                    <systemPropertyVariables>-->
+<!--                                        <hazelcast.cofing>classpath:hazelcast-test.yaml</hazelcast.cofing>-->
+<!--                                    </systemPropertyVariables>-->
+<!--                                </configuration>-->
+<!--                            </plugin>-->
 
             </plugins>
         </pluginManagement>
