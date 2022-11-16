@@ -84,6 +84,12 @@
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
+            <dependency>
+                <groupId>cz.hronza.core.rhrpoc</groupId>
+                <artifactId>rhrpoc-core-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
             <!--            SPRING BOOT ACTUATOR-->
             <!--            https://springframework.guru/actuator-in-spring-boot/-->
             <dependency>
