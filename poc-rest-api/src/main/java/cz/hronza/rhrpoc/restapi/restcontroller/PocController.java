@@ -1,8 +1,8 @@
 package cz.hronza.rhrpoc.restapi.restcontroller;
 
 import cz.hronza.rhrpoc.business_logic.domain.Result;
-import cz.hronza.rhrpoc.business_logic.enumer.OperationsEnum;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacade;
+import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import cz.hronza.rhrpoc.restapi.api.PocRestApi;
 import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
 import cz.hronza.rhrpoc.restapi.dto.ResultDto;
