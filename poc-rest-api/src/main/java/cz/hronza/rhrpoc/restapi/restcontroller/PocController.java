@@ -2,10 +2,10 @@ package cz.hronza.rhrpoc.restapi.restcontroller;
 
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacade;
+import cz.hronza.rhrpoc.core.api.api.PocRestApi;
+import cz.hronza.rhrpoc.core.api.dto.ResultDto;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
-import cz.hronza.rhrpoc.restapi.api.PocRestApi;
 import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
-import cz.hronza.rhrpoc.restapi.dto.ResultDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
