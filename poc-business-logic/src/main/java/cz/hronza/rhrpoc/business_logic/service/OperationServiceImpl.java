@@ -1,9 +1,13 @@
 package cz.hronza.rhrpoc.business_logic.service;
 
+import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OperationServiceImpl implements OperationService {
+
+    public static final String CANNOT_BE_DIVIDED_BY_0_MESSAGE = "Cannot be divided by 0.";
+
     @Override
     public int sum(Integer a, Integer b) {
         return a + b;
@@ -19,8 +23,7 @@ public class OperationServiceImpl implements OperationService {
         if (b != 0)
             return a / b;
         else
-            // TODO vyhoď vlastní výjimku
-            return Integer.MIN_VALUE;
+            throw new RhrCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE);
     }
 
     @Override
