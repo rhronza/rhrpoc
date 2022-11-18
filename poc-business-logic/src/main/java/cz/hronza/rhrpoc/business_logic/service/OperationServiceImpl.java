@@ -23,7 +23,7 @@ public class OperationServiceImpl implements OperationService {
         if (b != 0)
             return a / b;
         else
-            throw new RhrCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE);
+            throw new RhrCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE, "message", "variableB is equals 0");
     }
 
     @Override
