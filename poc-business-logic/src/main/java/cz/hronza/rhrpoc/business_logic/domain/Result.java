@@ -1,6 +1,7 @@
 package cz.hronza.rhrpoc.business_logic.domain;
 
 
+import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 
 public class Result {
@@ -8,6 +9,7 @@ public class Result {
     private Integer varA;
     private Integer varB;
     private OperationsEnum operationsEnum;
+    private MultipleOperationsEnum multipleOperationsEnum;
     private Integer result;
 
     public Integer getVarA() {
@@ -43,6 +45,15 @@ public class Result {
 
     public Result setResult(Integer result) {
         this.result = result;
+        return this;
+    }
+
+    public MultipleOperationsEnum getMultipleOperationsEnum() {
+        return multipleOperationsEnum;
+    }
+
+    public Result setMultipleOperationsEnum(MultipleOperationsEnum multipleOperationsEnum) {
+        this.multipleOperationsEnum = multipleOperationsEnum;
         return this;
     }
 }

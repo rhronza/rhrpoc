@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacadeImpl;
+import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
 import cz.hronza.rhrpoc.core.common.exception.RhrPocExceptionHandler;
 import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
 import cz.hronza.rhrpoc.restapi.restcontroller.PocController;
 import org.json.JSONObject;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -37,6 +39,8 @@ public class PocControllerTest extends AbstractControllerTest {
     public static final int RESULT_MULTIPLICATION = 147;
     public static final String VARIABLE_B_VALUE = "7";
     public static final String VARIABLE_A_VALUE = "21";
+    public static final Integer RESULT_SUM_MULTIPLICATION = 80;
+    public static final int RESULT_MULTIPLE_MULTIPLICATION = 23625;
     @MockBean
     private CalculationFacadeImpl calculationFacade;
 
@@ -56,13 +60,13 @@ public class PocControllerTest extends AbstractControllerTest {
         String content = mvcResult.getResponse().getContentAsString();
         JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
 
-        assertEquals(OperationsEnum.SUM.toString(), response.get("operationsEnum").asText());
+        assertEquals(OperationsEnum.SUM.toString(), response.get("operation").asText());
         assertEquals(RESULT_SUM, response.get("result").asInt());
 
         // přes JSONObject:
         String niceJson = response.toPrettyString();
         JSONObject jsonObject = new JSONObject(niceJson); // šel by dosadit i content
-        assertEquals(OperationsEnum.SUM.toString(), jsonObject.get("operationsEnum"));
+        assertEquals(OperationsEnum.SUM.toString(), jsonObject.get("operation"));
         assertEquals(String.valueOf(RESULT_SUM), jsonObject.get("result"));
 
         //TODO udelat assert na log (dělal jsem to v sml be)
@@ -84,13 +88,13 @@ public class PocControllerTest extends AbstractControllerTest {
         String content = mvcResult.getResponse().getContentAsString();
         JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
 
-        assertEquals(OperationsEnum.DIFFERENCE.toString(), response.get("operationsEnum").asText());
+        assertEquals(OperationsEnum.DIFFERENCE.toString(), response.get("operation").asText());
         assertEquals(RESULT_DIFFRENCE, response.get("result").asInt());
 
         // přes JSONObject:
         String niceJson = response.toPrettyString();
         JSONObject jsonObject = new JSONObject(niceJson); // šel by dosadit i content
-        assertEquals(OperationsEnum.DIFFERENCE.toString(), jsonObject.get("operationsEnum"));
+        assertEquals(OperationsEnum.DIFFERENCE.toString(), jsonObject.get("operation"));
         assertEquals(String.valueOf(RESULT_DIFFRENCE), jsonObject.get("result"));
 
         //TODO udělat assert na log (dělal jsem to v sml be)
@@ -111,13 +115,13 @@ public class PocControllerTest extends AbstractControllerTest {
         String content = mvcResult.getResponse().getContentAsString();
         JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
 
-        assertEquals(OperationsEnum.DIVIDE.toString(), response.get("operationsEnum").asText());
+        assertEquals(OperationsEnum.DIVIDE.toString(), response.get("operation").asText());
         assertEquals(RESULT_DIVIDE, response.get("result").asInt());
 
         // přes JSONObject:
         String niceJson = response.toPrettyString();
         JSONObject jsonObject = new JSONObject(niceJson); // šel by dosadit i content
-        assertEquals(OperationsEnum.DIVIDE.toString(), jsonObject.get("operationsEnum"));
+        assertEquals(OperationsEnum.DIVIDE.toString(), jsonObject.get("operation"));
         assertEquals(String.valueOf(RESULT_DIVIDE), jsonObject.get("result"));
 
         //TODO udělat assert na log (dělal jsem to v sml be)
@@ -148,7 +152,6 @@ public class PocControllerTest extends AbstractControllerTest {
         //TODO udělat assert na log (dělal jsem to v sml be)
     }
 
-
     @Test
     void makeOperationMultiplicationPositiveTest() throws Exception {
         universalMockCalculate();
@@ -164,16 +167,58 @@ public class PocControllerTest extends AbstractControllerTest {
         String content = mvcResult.getResponse().getContentAsString();
         JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
 
-        assertEquals(OperationsEnum.MULTIPLICATION.toString(), response.get("operationsEnum").asText());
+        assertEquals(OperationsEnum.MULTIPLICATION.toString(), response.get("operation").asText());
         assertEquals(RESULT_MULTIPLICATION, response.get("result").asInt());
 
+        //TODO udělat assert na log (dělal jsem to v sml be)
+    }
+
+
+    @Test
+    void makeOperationMultipleSumPositiveTest() throws Exception {
+        universalMockMultiplicationCalculate();
+
+        MvcResult mvcResult = mockMvc.perform(get(String.format("/calculation/%s", "MULTIPLE_SUM"))
+                        .param("numbers", "25")
+                        .param("numbers", "3")
+                        .param("numbers", "45")
+                        .param("numbers", "7")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+        String content = mvcResult.getResponse().getContentAsString();
+        JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
+
+        assertEquals(MultipleOperationsEnum.MULTIPLE_SUM.toString(), response.get("operation").asText());
+        Assertions.assertEquals(RESULT_SUM_MULTIPLICATION, response.get("result").asInt());
+
         // přes JSONObject:
-        String niceJson = response.toPrettyString();
-        JSONObject jsonObject = new JSONObject(niceJson); // šel by dosadit i content
-        assertEquals(OperationsEnum.MULTIPLICATION.toString(), jsonObject.get("operationsEnum"));
-        assertEquals(String.valueOf(RESULT_MULTIPLICATION), jsonObject.get("result"));
+        JSONObject jsonObject = new JSONObject(content);
+        assertEquals(MultipleOperationsEnum.MULTIPLE_SUM.toString(), jsonObject.get("operation"));
+        assertEquals(RESULT_SUM_MULTIPLICATION.toString(), jsonObject.get("result"));
 
         //TODO udělat assert na log (dělal jsem to v sml be)
+    }
+
+    @Test
+    void makeOperationMultipleMultiplicationPositiveTest() throws Exception {
+        universalMockMultiplicationCalculate();
+
+        MvcResult mvcResult = mockMvc.perform(get(String.format("/calculation/%s", "MULTIPLE_MULTIPLICATION"))
+                        .param("numbers", "25")
+                        .param("numbers", "3")
+                        .param("numbers", "45")
+                        .param("numbers", "7")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+        String content = mvcResult.getResponse().getContentAsString();
+        JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
+
+        assertEquals(MultipleOperationsEnum.MULTIPLE_MULTIPLICATION.toString(), response.get("operation").asText());
+        Assertions.assertEquals(RESULT_MULTIPLE_MULTIPLICATION, response.get("result").asInt());
     }
 
 
@@ -195,5 +240,16 @@ public class PocControllerTest extends AbstractControllerTest {
                 return arg0 != null && arg1 != null ? new Result().setResult(arg0 * arg1).setOperationsEnum(OperationsEnum.MULTIPLICATION) : null;
             else return null;
         }).when(calculationFacade).calculate(any(), any(), any());
+    }
+
+    private void universalMockMultiplicationCalculate() {
+        doAnswer(args -> {
+            MultipleOperationsEnum currentMultipleOperationsEnum = args.getArgument(0);
+            if (MultipleOperationsEnum.MULTIPLE_SUM.equals(currentMultipleOperationsEnum))
+                return new Result().setResult(RESULT_SUM_MULTIPLICATION).setMultipleOperationsEnum(MultipleOperationsEnum.MULTIPLE_SUM);
+            if (MultipleOperationsEnum.MULTIPLE_MULTIPLICATION.equals(currentMultipleOperationsEnum))
+                return new Result().setResult(RESULT_MULTIPLE_MULTIPLICATION).setMultipleOperationsEnum(MultipleOperationsEnum.MULTIPLE_MULTIPLICATION);
+            else return null;
+        }).when(calculationFacade).multipleCaculation(any(), any());
     }
 }

@@ -2,9 +2,11 @@ package cz.hronza.rhrpoc.business_logic.facade;
 
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.service.OperationService;
-
+import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CalculationFacadeImpl implements CalculationFacade {
@@ -32,8 +34,20 @@ public class CalculationFacadeImpl implements CalculationFacade {
                 result = operationService.multiplication(a, b);
                 break;
         }
-        return new Result().setVarA(a).setVarB(b).setOperationsEnum(operationsEnum).setResult( result);
+        return new Result().setVarA(a).setVarB(b).setOperationsEnum(operationsEnum).setResult(result);
     }
 
-    
+    @Override
+    public Result multipleCaculation(MultipleOperationsEnum multipleOperationsEnum, List<Integer> numbers) {
+        int result = 0;
+        if (MultipleOperationsEnum.MULTIPLE_SUM.equals(multipleOperationsEnum)) {
+            result = numbers.stream().mapToInt(Integer::intValue).sum();
+        } else if ((MultipleOperationsEnum.MULTIPLE_MULTIPLICATION.equals(multipleOperationsEnum))) {
+            result = numbers.stream().reduce(1, (a, b) -> a * b);
+        }
+        return new Result()
+                .setResult(result)
+                .setMultipleOperationsEnum(multipleOperationsEnum)
+                ;
+    }
 }

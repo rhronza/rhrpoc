@@ -11,7 +11,10 @@ public class ResultConverter implements ToDtoConverter<Result, ResultDto> {
     public ResultDto toDto(Result domain) {
         return new ResultDto()
                 .setResult(String.valueOf(domain.getResult()))
-                .setOperationsEnum(domain.getOperationsEnum())
+                .setOperation(
+                        domain.getOperationsEnum() != null ?
+                                domain.getOperationsEnum().toString() :
+                                domain.getMultipleOperationsEnum().toString())
                 ;
     }
 }
