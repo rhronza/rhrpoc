@@ -25,7 +25,7 @@ public class PocController implements PocRestApi {
 
 
     @Override
-    public ResponseEntity<ResultDto> makeOperation(Integer variableA,
+     public ResponseEntity<ResultDto> makeOperation(Integer variableA,
                                                    Integer variableB,
                                                    OperationsEnum operationsEnum) {
         Result result = calculationFacade.calculate(variableA, variableB, operationsEnum);
