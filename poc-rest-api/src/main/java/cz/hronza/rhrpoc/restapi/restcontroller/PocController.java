@@ -4,6 +4,7 @@ import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacade;
 import cz.hronza.rhrpoc.core.api.api.PocRestApi;
 import cz.hronza.rhrpoc.core.api.dto.ResultDto;
+import cz.hronza.rhrpoc.core.api.dto.SellerAndSoldProductsDto;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
@@ -44,8 +45,15 @@ public class PocController implements PocRestApi {
     }
 
     @Override
-    public ResponseEntity<ResultDto> makeOperation(@Valid MultipleOperationsEnum multipleOperationsEnum, @Valid List<Integer> numbers) {
+    public ResponseEntity<ResultDto> makeMultipleOperation(@Valid MultipleOperationsEnum multipleOperationsEnum, @Valid List<Integer> numbers) {
         Result result = calculationFacade.multipleCaculation(multipleOperationsEnum, numbers);
         return ResponseEntity.ok(resultConverter.toDto(result));
+    }
+
+    @Override
+    public ResponseEntity<SellerAndSoldProductsDto> addSellerAndSoldPoducts(SellerAndSoldProductsDto sellerAndSoldProductsDto) throws RuntimeException {
+          // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(sellerAndSoldProductsDto) ;
+        
+        return ResponseEntity.ok(sellerAndSoldProductsDto);
     }
 }
