@@ -1,7 +1,7 @@
 package cz.hronza.rhrpoc.restapi.converter;
 
 import cz.hronza.rhrpoc.business_logic.domain.Result;
-import cz.hronza.rhrpoc.convetor.ToDtoConverter;
+import cz.hronza.rhrpoc.converter.ToDtoConverter;
 import cz.hronza.rhrpoc.core.api.dto.ResultDto;
 import org.springframework.stereotype.Component;
 

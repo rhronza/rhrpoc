@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static cz.hronza.rhrpoc.converter.FunctionaInterfaceConvertor.elementToList;
+import static cz.hronza.rhrpoc.converter.FunctionaInterfaceConvertor.elementConvert;
+import static cz.hronza.rhrpoc.converter.FunctionaInterfaceConvertor.listToList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
