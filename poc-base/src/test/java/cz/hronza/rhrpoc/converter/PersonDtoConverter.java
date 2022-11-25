@@ -2,7 +2,6 @@ package cz.hronza.rhrpoc.converter;
 
 import cz.hronza.rhrpoc.common.Person;
 import cz.hronza.rhrpoc.common.PersonDto;
-import cz.hronza.rhrpoc.convetor.ToDtoConverter;
 
 import java.time.LocalDate;
 import java.util.List;
