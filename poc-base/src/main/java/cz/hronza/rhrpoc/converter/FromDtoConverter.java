@@ -1,4 +1,4 @@
-package cz.hronza.rhrpoc.convetor;
+package cz.hronza.rhrpoc.converter;
 
 import java.util.Collection;
 import java.util.Collections;

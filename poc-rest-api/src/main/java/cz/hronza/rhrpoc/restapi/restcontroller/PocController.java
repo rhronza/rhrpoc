@@ -2,7 +2,9 @@ package cz.hronza.rhrpoc.restapi.restcontroller;
 
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacade;
+import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacade;
 import cz.hronza.rhrpoc.core.api.api.PocRestApi;
+import cz.hronza.rhrpoc.core.api.dto.OutputDto;
 import cz.hronza.rhrpoc.core.api.dto.ResultDto;
 import cz.hronza.rhrpoc.core.api.dto.SellerAndSoldProductsDto;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
@@ -14,17 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
-//@Api
 @RestController
 public class PocController implements PocRestApi {
+    private final ClientEasyBeFacade clientEasyBeFacade;
     private final CalculationFacade calculationFacade;
+
 
     private final ResultConverter resultConverter;
     private static final System.Logger logger = System.getLogger(PocController.class.getSimpleName());
 
 
-    public PocController(CalculationFacade calculationFacade, ResultConverter resultConverter) {
+    public PocController(CalculationFacade calculationFacade, ClientEasyBeFacade clientEasyBeFacade, ResultConverter resultConverter) {
         this.calculationFacade = calculationFacade;
+        this.clientEasyBeFacade = clientEasyBeFacade;
         this.resultConverter = resultConverter;
     }
 
@@ -52,8 +56,19 @@ public class PocController implements PocRestApi {
 
     @Override
     public ResponseEntity<SellerAndSoldProductsDto> addSellerAndSoldPoducts(SellerAndSoldProductsDto sellerAndSoldProductsDto) throws RuntimeException {
-          // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(sellerAndSoldProductsDto) ;
-        
+        // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(sellerAndSoldProductsDto) ;
+
         return ResponseEntity.ok(sellerAndSoldProductsDto);
+    }
+
+    @Override
+    public ResponseEntity<OutputDto> reverseEndpointFromEasyBe(String id, String name) {
+        logger.log(System.Logger.Level.INFO, String.format("START RHRPOC"));
+        logger.log(System.Logger.Level.INFO, String.format("  id=%s",id));
+        logger.log(System.Logger.Level.INFO, String.format("  name=%s",name));
+        ResponseEntity<OutputDto> outputDtoResponseEntity = clientEasyBeFacade.reverseEndpointFromEasyBe(id, name);
+        logger.log(System.Logger.Level.INFO, String.format("  outPut=%s", outputDtoResponseEntity));
+        logger.log(System.Logger.Level.INFO, String.format("END RHRPOC"));
+        return outputDtoResponseEntity;
     }
 }

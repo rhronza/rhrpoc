@@ -3,8 +3,15 @@ package cz.hronza.rhrpoc.restapi.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import cz.hronza.rhpoc.easy_be.config.PocEasyBeConfiguration;
+import cz.hronza.rhpoc.easy_be.service.EasyBeClient;
+import cz.hronza.rhpoc.easy_be.service.EasyBeClientImpl;
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacadeImpl;
+import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacade;
+import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacadeImpl;
+import cz.hronza.rhrpoc.business_logic.service.ClientEasyBe;
+import cz.hronza.rhrpoc.business_logic.service.ClientEasyBeImpl;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
@@ -19,6 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.web.client.RestTemplate;
 
 import static cz.hronza.rhrpoc.business_logic.service.OperationServiceImpl.CANNOT_BE_DIVIDED_BY_0_MESSAGE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +37,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-@ContextConfiguration(classes = {ResultConverter.class, PocController.class})
+@ContextConfiguration(classes = {
+        ResultConverter.class,
+        PocController.class,
+        ClientEasyBe.class,
+        ClientEasyBeFacade.class,
+        ClientEasyBeImpl.class,
+        ClientEasyBeFacadeImpl.class,
+        EasyBeClient.class,
+        EasyBeClientImpl.class,
+        RestTemplate.class,
+        PocEasyBeConfiguration.class
+})
 
 public class PocControllerTest extends AbstractControllerTest {
 

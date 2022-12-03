@@ -27,6 +27,7 @@
         <module>poc-persistence</module>
         <module>poc-rest-api</module>
         <module>poc-persistence-db</module>
+        <module>poc-easy-be</module>
     </modules>
 
     <properties>
@@ -75,6 +76,12 @@
             <dependency>
                 <groupId>cz.hronza.rhrpoc</groupId>
                 <artifactId>poc-rest-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cz.hronza.rhrpoc</groupId>
+                <artifactId>poc-easy-be</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

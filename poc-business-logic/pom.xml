@@ -29,8 +29,13 @@
         </dependency>
 
         <dependency>
+            <groupId>cz.hronza.rhrpoc</groupId>
+            <artifactId>poc-easy-be</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>cz.hronza.core.rhrpoc</groupId>
-            <artifactId>rhrpoc-core-common</artifactId>
+            <artifactId>rhrpoc-core-api</artifactId>
         </dependency>
 
 
