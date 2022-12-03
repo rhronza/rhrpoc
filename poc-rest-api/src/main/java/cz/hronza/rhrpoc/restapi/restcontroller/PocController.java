@@ -63,6 +63,12 @@ public class PocController implements PocRestApi {
 
     @Override
     public ResponseEntity<OutputDto> reverseEndpointFromEasyBe(String id, String name) {
-        return clientEasyBeFacade.reverseEndpointFromEasyBe(id, name);
+        logger.log(System.Logger.Level.INFO, String.format("START RHRPOC"));
+        logger.log(System.Logger.Level.INFO, String.format("  id=%s",id));
+        logger.log(System.Logger.Level.INFO, String.format("  name=%s",name));
+        ResponseEntity<OutputDto> outputDtoResponseEntity = clientEasyBeFacade.reverseEndpointFromEasyBe(id, name);
+        logger.log(System.Logger.Level.INFO, String.format("  outPut=%s", outputDtoResponseEntity));
+        logger.log(System.Logger.Level.INFO, String.format("END RHRPOC"));
+        return outputDtoResponseEntity;
     }
 }
