@@ -37,6 +37,7 @@ class ConvertersTest {
     @BeforeEach
     public void init() {
         this.personDtoConverter = new PersonDtoConverter();
+
         this.people = List.of(new Person().setFirstName(ROMAN_NAME).setSurname(HRONZA).setAge(333), new Person().setFirstName(MONIKA).setSurname(HRONZOVAA).setAge(18));
         this.names = List.of(KAREL_NAME, PAVEL_NAME);
 
@@ -93,6 +94,7 @@ class ConvertersTest {
 
     @Test
     void listToListTest() {
+
         List<NameDto> nameDtos = listToList(NameDto::new, NameDto::setNameDto, this.names);
         assertEquals(2, nameDtos.size());
         assertEquals(KAREL_NAME, nameDtos.get(0).getNameDto());
@@ -105,6 +107,7 @@ class ConvertersTest {
             dto.setName(name);
             dto.setRodneCislo(RODNE_CISLO);
         }, this.names);
+
         assertEquals(2, personsDto2.size());
         assertEquals(KAREL_NAME, personsDto2.get(0).getName());
         assertEquals(RODNE_CISLO, personsDto2.get(0).getRodneCislo());
