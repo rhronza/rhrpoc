@@ -15,7 +15,7 @@
 
     <groupId>cz.hronza.rhrpoc</groupId>
     <artifactId>rhrpoc</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <description>rhrpoc</description>
 
@@ -33,7 +33,7 @@
     <properties>
         <java.version>11</java.version>
         <spring-boot-starter-actuator.version>2.4.1</spring-boot-starter-actuator.version>
-        <project.version>0.0.1-SNAPSHOT</project.version>
+<!--        <project.version>0.0.1-SNAPSHOT</project.version>-->
         <swagger.version>2.9.2</swagger.version>
         <logstash.version>7.2</logstash.version>
         <javax.version>1.1.4</javax.version>
