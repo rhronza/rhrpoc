@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.1</version>
+        <version>2.7.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -31,16 +31,16 @@
     </modules>
 
     <properties>
-        <java.version>11</java.version>
-        <spring-boot-starter-actuator.version>2.4.1</spring-boot-starter-actuator.version>
-<!--        <project.version>0.0.1-SNAPSHOT</project.version>-->
+        <java.version>17</java.version>
+        <spring-boot-starter-actuator.version>2.7.6</spring-boot-starter-actuator.version>
+        <!--        <project.version>0.0.1-SNAPSHOT</project.version>-->
         <swagger.version>2.9.2</swagger.version>
         <logstash.version>7.2</logstash.version>
         <javax.version>1.1.4</javax.version>
         <jackson-databind-nullable.version>0.1.0</jackson-databind-nullable.version>
         <log4jdbc.vesrion>1.16</log4jdbc.vesrion>
         <jacoco.version>0.8.6</jacoco.version>
-        <springdoc-openapi-ui.version>1.4.8</springdoc-openapi-ui.version>
+        <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
     </properties>
 
 
@@ -182,16 +182,16 @@
 
                 <!--            COL v parent pom-->
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-<!--                            <plugin>-->
-<!--                                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                                <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                                <version>2.22.2</version>-->
-<!--                                <configuration>-->
-<!--                                    <systemPropertyVariables>-->
-<!--                                        <hazelcast.cofing>classpath:hazelcast-test.yaml</hazelcast.cofing>-->
-<!--                                    </systemPropertyVariables>-->
-<!--                                </configuration>-->
-<!--                            </plugin>-->
+                <!--                            <plugin>-->
+                <!--                                <groupId>org.apache.maven.plugins</groupId>-->
+                <!--                                <artifactId>maven-surefire-plugin</artifactId>-->
+                <!--                                <version>2.22.2</version>-->
+                <!--                                <configuration>-->
+                <!--                                    <systemPropertyVariables>-->
+                <!--                                        <hazelcast.cofing>classpath:hazelcast-test.yaml</hazelcast.cofing>-->
+                <!--                                    </systemPropertyVariables>-->
+                <!--                                </configuration>-->
+                <!--                            </plugin>-->
 
             </plugins>
         </pluginManagement>

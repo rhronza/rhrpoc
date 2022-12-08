@@ -13,10 +13,6 @@
 
     <description>poc-persistence</description>
 
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-    
     <dependencies>
         <dependency>
             <groupId>cz.hronza.rhrpoc</groupId>

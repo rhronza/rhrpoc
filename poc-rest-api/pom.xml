@@ -8,17 +8,12 @@
         <artifactId>rhrpoc</artifactId>
         <version>0.0.3-SNAPSHOT</version>
     </parent>
-    
+
 
     <artifactId>poc-rest-api</artifactId>
 
     <name>poc-rest-api</name>
     <description>poc-rest-api</description>
-
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-
 
     <dependencies>
 
