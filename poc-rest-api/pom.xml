@@ -40,6 +40,12 @@
         <dependency>
             <groupId>cz.hronza.core.rhrpoc</groupId>
             <artifactId>rhrpoc-core-api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>swagger-annotations</artifactId>
+                    <groupId>io.swagger</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
