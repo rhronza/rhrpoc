@@ -6,12 +6,18 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.hronza.rhpoc.easy_be.config.PocEasyBeConfiguration;
 import cz.hronza.rhpoc.easy_be.service.EasyBeClient;
 import cz.hronza.rhpoc.easy_be.service.EasyBeClientImpl;
+import cz.hronza.rhrpoc.business_logic.domain.DateTimeDays;
+import cz.hronza.rhrpoc.business_logic.domain.DateTimeNew;
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacadeImpl;
 import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacadeImpl;
+import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacade;
+import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacadeImpl;
 import cz.hronza.rhrpoc.business_logic.service.ClientEasyBe;
 import cz.hronza.rhrpoc.business_logic.service.ClientEasyBeImpl;
+import cz.hronza.rhrpoc.business_logic.service.OffsetDateTimeService;
+import cz.hronza.rhrpoc.business_logic.service.OffsetDateTimeServiceImpl;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
@@ -47,11 +53,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         EasyBeClient.class,
         EasyBeClientImpl.class,
         RestTemplate.class,
-        PocEasyBeConfiguration.class
+        PocEasyBeConfiguration.class,
+        DateTimeDays.class,
+        DateTimeNew.class,
+        OffsetDateTimeFacade.class,
+        OffsetDateTimeFacadeImpl.class,
+        OffsetDateTimeService.class,
+        OffsetDateTimeServiceImpl.class
 })
 
-public class PocControllerTest extends AbstractControllerTest {
-
+class PocControllerTest extends AbstractControllerTest {
     public static final int RESULT_SUM = 28;
     public static final int RESULT_DIFFRENCE = 14;
     public static final int RESULT_DIVIDE = 3;
