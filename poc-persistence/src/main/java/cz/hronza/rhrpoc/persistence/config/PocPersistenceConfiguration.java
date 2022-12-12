@@ -1,13 +1,17 @@
 package cz.hronza.rhrpoc.persistence.config;
 
-import cz.hronza.rhrpoc.persistence.PocPersistencePackage;
-import cz.hronza.rhrpoc.poc_persistence_db.PocPersistenceDbPackage;
-import org.springframework.context.annotation.ComponentScan;
+import cz.hronza.rhrpoc.poc_persistence_domain.config.PocPersistenceDomainConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import java.time.Clock;
+
 @Configuration
-@ComponentScan(basePackageClasses = PocPersistencePackage.class)
-@Import(value = PocPersistenceDbPackage.class)
+@Import({PocPersistenceDomainConfiguration.class, PocPersistenceJpaConfiguration.class})
 public class PocPersistenceConfiguration {
+    @Bean
+    public Clock systemDefaultZoneClock() {
+        return Clock.systemDefaultZone();
+    }
 }

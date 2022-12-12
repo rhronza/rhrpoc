@@ -26,14 +26,13 @@
         <module>poc-business-logic</module>
         <module>poc-persistence</module>
         <module>poc-rest-api</module>
-        <module>poc-persistence-db</module>
+        <module>poc-persistence-domain</module>
         <module>poc-easy-be</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
         <spring-boot-starter-actuator.version>2.7.6</spring-boot-starter-actuator.version>
-        <!--        <project.version>0.0.1-SNAPSHOT</project.version>-->
         <swagger.version>2.9.2</swagger.version>
         <logstash.version>7.2</logstash.version>
         <javax.version>1.1.4</javax.version>
@@ -41,6 +40,7 @@
         <log4jdbc.vesrion>1.16</log4jdbc.vesrion>
         <jacoco.version>0.8.6</jacoco.version>
         <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
+        <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
     </properties>
 
 
@@ -69,7 +69,7 @@
 
             <dependency>
                 <groupId>cz.hronza.rhrpoc</groupId>
-                <artifactId>poc-persistence-db</artifactId>
+                <artifactId>poc-persistence-domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -148,6 +148,26 @@
                 <artifactId>jackson-databind-nullable</artifactId>
                 <version>${jackson-databind-nullable.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${jakarta.persistence-api.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.5.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>2.7.4</version>
+            </dependency>
+
         </dependencies>
 
 

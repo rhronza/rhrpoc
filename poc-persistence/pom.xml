@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>cz.hronza.rhrpoc</groupId>
-            <artifactId>poc-persistence-db</artifactId>
+            <artifactId>poc-persistence-domain</artifactId>
         </dependency>
 
         <dependency>
@@ -28,6 +28,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
         </dependency>
     </dependencies>
 
