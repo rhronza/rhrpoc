@@ -9,7 +9,7 @@ import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacade;
 import cz.hronza.rhrpoc.core.api.api.PocRestApi;
 import cz.hronza.rhrpoc.core.api.dto.OffsetDateTimeOutputDto;
 import cz.hronza.rhrpoc.core.api.dto.OutputDto;
-import cz.hronza.rhrpoc.core.api.dto.ResultDto;
+import cz.hronza.rhrpoc.core.api.dto.ResultRecDto;
 import cz.hronza.rhrpoc.core.api.dto.SellerAndSoldProductsDto;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
@@ -45,9 +45,9 @@ public class PocController implements PocRestApi {
 
 
     @Override
-    public ResponseEntity<ResultDto> makeOperation(Integer variableA,
-                                                   Integer variableB,
-                                                   OperationsEnum operationsEnum) {
+    public ResponseEntity<ResultRecDto> makeOperation(Integer variableA,
+                                                      Integer variableB,
+                                                      OperationsEnum operationsEnum) {
         Result result = calculationFacade.calculate(variableA, variableB, operationsEnum);
 
         logger.log(
@@ -60,7 +60,7 @@ public class PocController implements PocRestApi {
     }
 
     @Override
-    public ResponseEntity<ResultDto> makeMultipleOperation(@Valid MultipleOperationsEnum multipleOperationsEnum, @Valid List<Integer> numbers) {
+    public ResponseEntity<ResultRecDto> makeMultipleOperation(@Valid MultipleOperationsEnum multipleOperationsEnum, @Valid List<Integer> numbers) {
         Result result = calculationFacade.multipleCaculation(multipleOperationsEnum, numbers);
         return ResponseEntity.ok(resultConverter.toDto(result));
     }
@@ -74,7 +74,7 @@ public class PocController implements PocRestApi {
 
     @Override
     public ResponseEntity<OutputDto> reverseEndpointFromEasyBe(String id, String name) {
-        logger.log(System.Logger.Level.INFO,"START RHRPOC");
+        logger.log(System.Logger.Level.INFO, "START RHRPOC");
         logger.log(System.Logger.Level.INFO, String.format("  id=%s", id));
         logger.log(System.Logger.Level.INFO, String.format("  name=%s", name));
         ResponseEntity<OutputDto> outputDtoResponseEntity = clientEasyBeFacade.reverseEndpointFromEasyBe(id, name);
