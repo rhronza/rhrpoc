@@ -35,11 +35,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.client.RestTemplate;
 
 import static cz.hronza.rhrpoc.business_logic.service.OperationServiceImpl.CANNOT_BE_DIVIDED_BY_0_MESSAGE;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
@@ -141,6 +144,8 @@ class PocControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.operation", is ("DIVIDE")))
+                .andExpect(jsonPath("$.result", is ("3")))
                 .andReturn();
         String content = mvcResult.getResponse().getContentAsString();
         JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
@@ -168,6 +173,11 @@ class PocControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.errorItemDtos[0].code", is("CANNOT_BE_DIVIDED_BY_ZERO")))
+                .andExpect(jsonPath("$.errorItemDtos[0].severity", is("ERROR")))
+                .andExpect(jsonPath("$.errorItemDtos[0].parameters", hasSize(1)))
+                .andExpect(jsonPath("$.errorItemDtos[0].parameters.[0].key", is("message")))
+                .andExpect(jsonPath("$.errorItemDtos[0].parameters.[0].value", is("variableB is equals 0")))
                 .andReturn();
         JSONObject errorItemsDtos = (JSONObject) new JSONObject(mvcResult.getResponse().getContentAsString()).getJSONArray("errorItemDtos").get(0);
 
