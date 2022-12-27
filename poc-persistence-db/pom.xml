@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>rhrpoc</artifactId>
+        <groupId>cz.hronza.rhrpoc</groupId>
+        <version>0.0.3-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>poc-persistence-db</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.liquibase</groupId>
+                    <artifactId>liquibase-maven-plugin</artifactId>
+                    <version>4.14.0</version>
+<!--                    jinak vyhazuje chybu:-->
+<!--                    API incompatibility was encountered while executing org.liquibase:liquibase-maven-plugin:4.2.2:generateChangeLog: java.lang.NoSuchMethodError: 'boolean liquibase.license.LicenseServiceUtils.isProLicenseValid()'-->
+                    <configuration>
+                        <propertyFile>src/main/resources/liquibase.properties</propertyFile>
+                        <changeLogFile>src/main/resources/changelog/changelog-master.yaml</changeLogFile>
+                        <outputChangeLogFile>src/main/resources/changelog/changelog.yaml</outputChangeLogFile>
+                        <outputFileEncoding>UTF-8</outputFileEncoding>
+                        <!--                        <logging>debug</logging>-->
+                        <!--                        <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>-->
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+</project>

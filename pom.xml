@@ -28,6 +28,7 @@
         <module>poc-rest-api</module>
         <module>poc-persistence-domain</module>
         <module>poc-easy-be</module>
+        <module>poc-persistence-db</module>
     </modules>
 
     <properties>
