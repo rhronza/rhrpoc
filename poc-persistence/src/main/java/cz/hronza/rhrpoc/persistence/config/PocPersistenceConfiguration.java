@@ -1,6 +1,6 @@
 package cz.hronza.rhrpoc.persistence.config;
 
-import cz.hronza.rhrpoc.poc_persistence_domain.config.PocPersistenceDomainConfiguration;
+import cz.hronza.rhrpoc.poc_persistence_entity.config.PocPersistenceDomainConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

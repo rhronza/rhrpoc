@@ -1,7 +1,7 @@
 package cz.hronza.rhrpoc.persistence.config;
 
 import cz.hronza.rhrpoc.persistence.repository.PocPersistenceRepositoryPackage;
-import cz.hronza.rhrpoc.poc_persistence_domain.entity.PocPersistanceDomainPackage;
+import cz.hronza.rhrpoc.poc_persistence_entity.entity.PocPersistanceDomainPackage;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

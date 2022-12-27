@@ -26,7 +26,7 @@
         <module>poc-business-logic</module>
         <module>poc-persistence</module>
         <module>poc-rest-api</module>
-        <module>poc-persistence-domain</module>
+        <module>poc-persistence-entity</module>
         <module>poc-easy-be</module>
         <module>poc-persistence-db</module>
     </modules>

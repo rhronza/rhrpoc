@@ -1,4 +1,4 @@
-package cz.hronza.rhrpoc.poc_persistence_domain.entity;
+package cz.hronza.rhrpoc.poc_persistence_entity.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ public class StoredItem implements Serializable {
     private static final long serialVersionUID = 2117236425856262477L;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "bigint")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

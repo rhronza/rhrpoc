@@ -1,7 +1,7 @@
 package cz.hronza.rhrpoc.persistence.repository;
 
 
-import cz.hronza.rhrpoc.poc_persistence_domain.entity.Stock;
+import cz.hronza.rhrpoc.poc_persistence_entity.entity.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

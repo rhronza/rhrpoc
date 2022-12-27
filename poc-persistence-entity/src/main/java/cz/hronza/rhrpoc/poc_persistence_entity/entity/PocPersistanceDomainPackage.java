@@ -1,4 +1,4 @@
-package cz.hronza.rhrpoc.poc_persistence_domain.entity;
+package cz.hronza.rhrpoc.poc_persistence_entity.entity;
 
 /**
  * The purpose of this class is to represent its packege in arder to allow

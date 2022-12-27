@@ -1,12 +1,16 @@
-package cz.hronza.rhrpoc.poc_persistence_domain.entity;
+package cz.hronza.rhrpoc.poc_persistence_entity.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -26,6 +30,9 @@ public class Stock implements Serializable {
 
     @Column(name = "area")
     private Integer area;
+
+    @OneToMany(mappedBy = "stockItemId.stockId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<StockItem> stockItems;
 
     public Long getId() {
         return id;
@@ -51,17 +58,25 @@ public class Stock implements Serializable {
         this.area = area;
     }
 
+    public List<StockItem> getStockItems() {
+        return stockItems;
+    }
+
+    public void setStockItems(List<StockItem> stockItems) {
+        this.stockItems = stockItems;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Stock)) return false;
         Stock stock = (Stock) o;
-        return getId().equals(stock.getId()) && Objects.equals(getTitle(), stock.getTitle()) && Objects.equals(getArea(), stock.getArea());
+        return getId().equals(stock.getId()) && Objects.equals(getTitle(), stock.getTitle()) && Objects.equals(getArea(), stock.getArea()) && Objects.equals(getStockItems(), stock.getStockItems());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getArea());
+        return Objects.hash(getId(), getTitle(), getArea(), getStockItems());
     }
 
     @Override
@@ -70,6 +85,7 @@ public class Stock implements Serializable {
                 .add("id=" + id)
                 .add("title='" + title + "'")
                 .add("area=" + area)
+//                .add("stockItems=" + stockItems)
                 .toString();
     }
 }
