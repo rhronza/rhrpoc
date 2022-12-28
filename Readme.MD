@@ -1,7 +1,9 @@
 Roman Hronza Personal project
 
 
-https://www.youtube.com/watch?v=Hp5ABvlZdT4
+[THIS is Why You Don't Improve As Software Engineer
+](https://www.youtube.com/watch?v=Hp5ABvlZdT4)
 
-https://www.baeldung.com/jpa-buddy
+[ A Guide to JPA Buddy
+](https://www.baeldung.com/jpa-buddy)
 
