@@ -1,7 +1,6 @@
 package cz.hronza.rhrpoc.business_logic.service;
 
 import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,7 +16,6 @@ class OperationServiceImplTest {
     private OperationServiceImpl operationService;
 
     @Test
-    @Disabled("dát enable až bude pryč to volání repository")
     void sumTest() {
         int sum = operationService.sum(15, 3);
         assertEquals(18, sum);

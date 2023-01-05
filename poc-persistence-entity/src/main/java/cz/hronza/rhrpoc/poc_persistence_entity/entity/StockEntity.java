@@ -16,7 +16,7 @@ import java.util.StringJoiner;
 
 @Entity
 @Table(name = "STOCK", schema = "public")
-public class Stock implements Serializable {
+public class StockEntity implements Serializable {
 
     private static final long serialVersionUID = 2117236425856262477L;
 
@@ -32,7 +32,7 @@ public class Stock implements Serializable {
     private Integer area;
 
     @OneToMany(mappedBy = "stockItemId.stockId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<StockItem> stockItems;
+    private List<StockItemEntity> stockItemEntities;
 
     public Long getId() {
         return id;
@@ -58,20 +58,20 @@ public class Stock implements Serializable {
         this.area = area;
     }
 
-    public List<StockItem> getStockItems() {
-        return stockItems;
+    public List<StockItemEntity> getStockItems() {
+        return stockItemEntities;
     }
 
-    public void setStockItems(List<StockItem> stockItems) {
-        this.stockItems = stockItems;
+    public void setStockItems(List<StockItemEntity> stockItemEntities) {
+        this.stockItemEntities = stockItemEntities;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Stock)) return false;
-        Stock stock = (Stock) o;
-        return getId().equals(stock.getId()) && Objects.equals(getTitle(), stock.getTitle()) && Objects.equals(getArea(), stock.getArea()) && Objects.equals(getStockItems(), stock.getStockItems());
+        if (!(o instanceof StockEntity)) return false;
+        StockEntity stockEntity = (StockEntity) o;
+        return getId().equals(stockEntity.getId()) && Objects.equals(getTitle(), stockEntity.getTitle()) && Objects.equals(getArea(), stockEntity.getArea()) && Objects.equals(getStockItems(), stockEntity.getStockItems());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Stock implements Serializable {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Stock.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", StockEntity.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("title='" + title + "'")
                 .add("area=" + area)

@@ -12,7 +12,7 @@ import java.util.StringJoiner;
 
 @Entity
 @Table(name = "stored_item", schema = "public")
-public class StoredItem implements Serializable {
+public class StoredItemEntity implements Serializable {
 
     private static final long serialVersionUID = 2117236425856262477L;
 
@@ -54,8 +54,8 @@ public class StoredItem implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StoredItem)) return false;
-        StoredItem that = (StoredItem) o;
+        if (!(o instanceof StoredItemEntity)) return false;
+        StoredItemEntity that = (StoredItemEntity) o;
         return getId().equals(that.getId()) && Objects.equals(getTitle(), that.getTitle()) && Objects.equals(getDescription(), that.getDescription());
     }
 
@@ -66,7 +66,7 @@ public class StoredItem implements Serializable {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", StoredItem.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", StoredItemEntity.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("title='" + title + "'")
                 .add("description='" + description + "'")

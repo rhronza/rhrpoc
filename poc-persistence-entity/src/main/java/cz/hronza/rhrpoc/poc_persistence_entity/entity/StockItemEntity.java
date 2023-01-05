@@ -7,16 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity
 @Table(name = "stock_item")
-public class StockItem implements Serializable {
+public class StockItemEntity implements Serializable {
 
     private static final long serialVersionUID = -7994504278623875431L;
 
@@ -37,11 +39,14 @@ public class StockItem implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "stockId", insertable=false, updatable=false)
-    private Stock stock;
+    private StockEntity stockEntity;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "storedItemId", insertable=false, updatable=false)
-    private StoredItem storedItem;
+    private StoredItemEntity storedItemEntity;
+
+    @OneToMany(mappedBy = "stockItemId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<WarehouseMovementEntity> warehouseMovementEntities;
 
     public Long getCurrentAmount() {
         return currentAmount;
@@ -83,45 +88,54 @@ public class StockItem implements Serializable {
         this.stockItemId = stockItemId;
     }
 
-    public Stock getStock() {
-        return stock;
+    public StockEntity getStock() {
+        return stockEntity;
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
+    public void setStock(StockEntity stockEntity) {
+        this.stockEntity = stockEntity;
     }
 
-    public StoredItem getStoredItem() {
-        return storedItem;
+    public StoredItemEntity getStoredItem() {
+        return storedItemEntity;
     }
 
-    public void setStoredItem(StoredItem storedItem) {
-        this.storedItem = storedItem;
+    public void setStoredItem(StoredItemEntity storedItemEntity) {
+        this.storedItemEntity = storedItemEntity;
+    }
+
+    public List<WarehouseMovementEntity> getWarehouseMovements() {
+        return warehouseMovementEntities;
+    }
+
+    public void setWarehouseMovements(List<WarehouseMovementEntity> warehouseMovementEntities) {
+        this.warehouseMovementEntities = warehouseMovementEntities;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StockItem)) return false;
-        StockItem stockItem = (StockItem) o;
-        return getStockItemId().equals(stockItem.getStockItemId()) && Objects.equals(getCurrentAmount(), stockItem.getCurrentAmount()) && Objects.equals(getMinimalAmount(), stockItem.getMinimalAmount()) && Objects.equals(getDateTimeLastIssue(), stockItem.getDateTimeLastIssue()) && Objects.equals(getDateLastStocking(), stockItem.getDateLastStocking()) && Objects.equals(getStock(), stockItem.getStock()) && Objects.equals(getStoredItem(), stockItem.getStoredItem());
+        if (!(o instanceof StockItemEntity)) return false;
+        StockItemEntity stockItemEntity = (StockItemEntity) o;
+        return getStockItemId().equals(stockItemEntity.getStockItemId()) && getCurrentAmount().equals(stockItemEntity.getCurrentAmount()) && Objects.equals(getMinimalAmount(), stockItemEntity.getMinimalAmount()) && Objects.equals(getDateTimeLastIssue(), stockItemEntity.getDateTimeLastIssue()) && Objects.equals(getDateLastStocking(), stockItemEntity.getDateLastStocking()) && Objects.equals(getStock(), stockItemEntity.getStock()) && Objects.equals(getStoredItem(), stockItemEntity.getStoredItem()) && Objects.equals(getWarehouseMovements(), stockItemEntity.getWarehouseMovements());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getStockItemId(), getCurrentAmount(), getMinimalAmount(), getDateTimeLastIssue(), getDateLastStocking(), getStock(), getStoredItem());
+        return Objects.hash(getStockItemId(), getCurrentAmount(), getMinimalAmount(), getDateTimeLastIssue(), getDateLastStocking(), getStock(), getStoredItem(), getWarehouseMovements());
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", StockItem.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", StockItemEntity.class.getSimpleName() + "[", "]")
                 .add("stockItemId=" + stockItemId)
                 .add("currentAmount=" + currentAmount)
                 .add("minimalAmount=" + minimalAmount)
                 .add("dateTimeLastIssue=" + dateTimeLastIssue)
                 .add("dateLastStocking=" + dateLastStocking)
-                .add("stock=" + stock)
-                .add("storedItem=" + storedItem)
+                .add("stock=" + stockEntity)
+                .add("storedItem=" + storedItemEntity)
+                .add("warehouseMovements=" + warehouseMovementEntities)
                 .toString();
     }
 }

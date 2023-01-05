@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1672331888562-4
+      author: roman (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: WAREHOUSE_MOVEMENT_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: stock_id
+                  type: BIGINT
+              - column:
+                  name: stored_item_id
+                  type: BIGINT
+              - column:
+                  name: amount
+                  type: FLOAT4
+              - column:
+                  name: created
+                  type: TIMESTAMP WITHOUT TIME ZONE
+            tableName: warehouse_movement
+

@@ -14,6 +14,7 @@ import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacadeImpl;
 import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacadeImpl;
+import cz.hronza.rhrpoc.business_logic.facade.StockFacadeImpl;
 import cz.hronza.rhrpoc.business_logic.service.ClientEasyBe;
 import cz.hronza.rhrpoc.business_logic.service.ClientEasyBeImpl;
 import cz.hronza.rhrpoc.business_logic.service.OffsetDateTimeService;
@@ -23,6 +24,9 @@ import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
 import cz.hronza.rhrpoc.core.common.exception.RhrPocExceptionHandler;
 import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockItemsMovementsDtoRecConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockTitleRecConverter;
 import cz.hronza.rhrpoc.restapi.restcontroller.PocController;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -62,7 +66,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         OffsetDateTimeFacade.class,
         OffsetDateTimeFacadeImpl.class,
         OffsetDateTimeService.class,
-        OffsetDateTimeServiceImpl.class
+        OffsetDateTimeServiceImpl.class,
+        StockTitleRecConverter.class,
+        StockConverter.class,
+        StockItemsMovementsDtoRecConverter.class
 })
 
 class PocControllerTest extends AbstractControllerTest {
@@ -76,6 +83,14 @@ class PocControllerTest extends AbstractControllerTest {
     public static final int RESULT_MULTIPLE_MULTIPLICATION = 23625;
     @MockBean
     private CalculationFacadeImpl calculationFacade;
+
+    @MockBean
+    private ClientEasyBeFacadeImpl clientEasyBeFacade;
+
+    @MockBean
+    private StockFacadeImpl stockFacade;
+
+
 
     @Test
     void makeOperationSumPositiveTest() throws Exception {

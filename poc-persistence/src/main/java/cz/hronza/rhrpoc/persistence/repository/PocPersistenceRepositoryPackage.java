@@ -7,4 +7,5 @@ package cz.hronza.rhrpoc.persistence.repository;
 public class PocPersistenceRepositoryPackage {
     private PocPersistenceRepositoryPackage() {
     }
+    
 }
