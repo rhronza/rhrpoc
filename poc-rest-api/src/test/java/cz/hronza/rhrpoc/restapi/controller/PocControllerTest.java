@@ -14,15 +14,19 @@ import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacadeImpl;
 import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacadeImpl;
+import cz.hronza.rhrpoc.business_logic.facade.StockFacadeImpl;
 import cz.hronza.rhrpoc.business_logic.service.ClientEasyBe;
 import cz.hronza.rhrpoc.business_logic.service.ClientEasyBeImpl;
 import cz.hronza.rhrpoc.business_logic.service.OffsetDateTimeService;
 import cz.hronza.rhrpoc.business_logic.service.OffsetDateTimeServiceImpl;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
-import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
+import cz.hronza.rhrpoc.core.common.exception.RhrPocCannotBeDividedByZero;
 import cz.hronza.rhrpoc.core.common.exception.RhrPocExceptionHandler;
 import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockItemsMovementsDtoRecConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockTitleRecConverter;
 import cz.hronza.rhrpoc.restapi.restcontroller.PocController;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -35,11 +39,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.client.RestTemplate;
 
 import static cz.hronza.rhrpoc.business_logic.service.OperationServiceImpl.CANNOT_BE_DIVIDED_BY_0_MESSAGE;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
@@ -59,9 +66,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         OffsetDateTimeFacade.class,
         OffsetDateTimeFacadeImpl.class,
         OffsetDateTimeService.class,
-        OffsetDateTimeServiceImpl.class
+        OffsetDateTimeServiceImpl.class,
+        StockTitleRecConverter.class,
+        StockConverter.class,
+        StockItemsMovementsDtoRecConverter.class
 })
-
 class PocControllerTest extends AbstractControllerTest {
     public static final int RESULT_SUM = 28;
     public static final int RESULT_DIFFRENCE = 14;
@@ -73,6 +82,13 @@ class PocControllerTest extends AbstractControllerTest {
     public static final int RESULT_MULTIPLE_MULTIPLICATION = 23625;
     @MockBean
     private CalculationFacadeImpl calculationFacade;
+
+    @MockBean
+    private ClientEasyBeFacadeImpl clientEasyBeFacade;
+
+    @MockBean
+    private StockFacadeImpl stockFacade;
+
 
     @Test
     void makeOperationSumPositiveTest() throws Exception {
@@ -141,6 +157,8 @@ class PocControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.operation", is("DIVIDE")))
+                .andExpect(jsonPath("$.result", is("3")))
                 .andReturn();
         String content = mvcResult.getResponse().getContentAsString();
         JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
@@ -168,6 +186,11 @@ class PocControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.errorItemDtos[0].code", is("CANNOT_BE_DIVIDED_BY_ZERO")))
+                .andExpect(jsonPath("$.errorItemDtos[0].severity", is("ERROR")))
+                .andExpect(jsonPath("$.errorItemDtos[0].parameters", hasSize(1)))
+                .andExpect(jsonPath("$.errorItemDtos[0].parameters.[0].key", is("message")))
+                .andExpect(jsonPath("$.errorItemDtos[0].parameters.[0].value", is("variableB is equals 0")))
                 .andReturn();
         JSONObject errorItemsDtos = (JSONObject) new JSONObject(mvcResult.getResponse().getContentAsString()).getJSONArray("errorItemDtos").get(0);
 
@@ -263,7 +286,7 @@ class PocControllerTest extends AbstractControllerTest {
                 return arg0 != null && arg1 != null ? new Result().setResult(arg0 - arg1).setOperationsEnum(OperationsEnum.DIFFERENCE) : null;
             if (OperationsEnum.DIVIDE.equals(currentOperation)) {
                 if (arg1 == 0)
-                    throw new RhrCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE, "message", "variableB is equals 0");
+                    throw new RhrPocCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE, "message", "variableB is equals 0");
                 return arg0 != null && arg1 != null ? new Result().setResult(arg0 / arg1).setOperationsEnum(OperationsEnum.DIVIDE) : null;
             }
             if (OperationsEnum.MULTIPLICATION.equals(currentOperation))

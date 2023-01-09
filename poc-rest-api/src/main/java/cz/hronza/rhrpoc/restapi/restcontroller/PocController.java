@@ -6,14 +6,23 @@ import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacade;
 import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacade;
+import cz.hronza.rhrpoc.business_logic.facade.StockFacade;
 import cz.hronza.rhrpoc.core.api.api.PocRestApi;
+import cz.hronza.rhrpoc.core.api.dto.NewStockId;
 import cz.hronza.rhrpoc.core.api.dto.OffsetDateTimeOutputDto;
 import cz.hronza.rhrpoc.core.api.dto.OutputDto;
-import cz.hronza.rhrpoc.core.api.dto.ResultDto;
-import cz.hronza.rhrpoc.core.api.dto.SellerAndSoldProductsDto;
+import cz.hronza.rhrpoc.core.api.dto.ResultRecDto;
+import cz.hronza.rhrpoc.core.api.dto.StockDtoRec;
+import cz.hronza.rhrpoc.core.api.dto.StockItemsMovementsListRecDto;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
 import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockItemsMovementsDtoRecConverter;
+import cz.hronza.rhrpoc.restapi.converter.StockTitleRecConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,61 +34,67 @@ import java.util.List;
 public class PocController implements PocRestApi {
     private final ClientEasyBeFacade clientEasyBeFacade;
     private final CalculationFacade calculationFacade;
-
     private final OffsetDateTimeFacade offsetDateTimeFacade;
+    private final StockFacade stockFacade;
+    private final StockTitleRecConverter stockTitleRecConverter;
+    private final StockConverter stockConverter;
 
+    private final StockItemsMovementsDtoRecConverter stockItemsMovementsDtoRecConverter;
 
     private final ResultConverter resultConverter;
-    private static final System.Logger logger = System.getLogger(PocController.class.getSimpleName());
+    private final Logger log = LoggerFactory.getLogger(PocController.class);
 
 
     public PocController(CalculationFacade calculationFacade,
                          ClientEasyBeFacade clientEasyBeFacade,
                          OffsetDateTimeFacade offsetDateTimeFacade,
+                         StockFacade stockFacade,
+                         StockTitleRecConverter stockTitleRecConverter,
+                         StockConverter stockConverter,
+                         StockItemsMovementsDtoRecConverter stockItemsMovementsDtoRecConverter,
                          ResultConverter resultConverter) {
         this.calculationFacade = calculationFacade;
         this.clientEasyBeFacade = clientEasyBeFacade;
         this.offsetDateTimeFacade = offsetDateTimeFacade;
+        this.stockFacade = stockFacade;
+        this.stockTitleRecConverter = stockTitleRecConverter;
+        this.stockConverter = stockConverter;
+        this.stockItemsMovementsDtoRecConverter = stockItemsMovementsDtoRecConverter;
         this.resultConverter = resultConverter;
     }
 
 
     @Override
-    public ResponseEntity<ResultDto> makeOperation(Integer variableA,
-                                                   Integer variableB,
-                                                   OperationsEnum operationsEnum) {
+    public ResponseEntity<ResultRecDto> makeOperation(Integer variableA,
+                                                      Integer variableB,
+                                                      OperationsEnum operationsEnum) {
         Result result = calculationFacade.calculate(variableA, variableB, operationsEnum);
 
-        logger.log(
-                System.Logger.Level.INFO,
-                String.format(
-                        "makeOperation is running, operation=%s, variableA=%d, variableB=%d, result=%d",
-                        operationsEnum.toString(), variableA, variableB, result.getResult()));
+        log.info("makeOperation is running, operation={}, variableA={}, variableB={}, result={}",
+                operationsEnum, variableA, variableB, result.getResult());
 
         return ResponseEntity.ok(resultConverter.toDto(result));
     }
 
     @Override
-    public ResponseEntity<ResultDto> makeMultipleOperation(@Valid MultipleOperationsEnum multipleOperationsEnum, @Valid List<Integer> numbers) {
+    public ResponseEntity<ResultRecDto> makeMultipleOperation(@Valid MultipleOperationsEnum multipleOperationsEnum, @Valid List<Integer> numbers) {
         Result result = calculationFacade.multipleCaculation(multipleOperationsEnum, numbers);
         return ResponseEntity.ok(resultConverter.toDto(result));
     }
 
     @Override
-    public ResponseEntity<SellerAndSoldProductsDto> addSellerAndSoldPoducts(SellerAndSoldProductsDto sellerAndSoldProductsDto) throws RuntimeException {
-        // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(sellerAndSoldProductsDto) ;
+    public ResponseEntity<NewStockId> addNewStock(StockDtoRec stockDtoRec) {
+        // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(stockDtoRec) ;
+        NewStockId newStockId = new NewStockId(stockFacade.addNewStock(stockConverter.toDomain(stockDtoRec)));
 
-        return ResponseEntity.ok(sellerAndSoldProductsDto);
+        return new ResponseEntity<>(newStockId, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<OutputDto> reverseEndpointFromEasyBe(String id, String name) {
-        logger.log(System.Logger.Level.INFO,"START RHRPOC");
-        logger.log(System.Logger.Level.INFO, String.format("  id=%s", id));
-        logger.log(System.Logger.Level.INFO, String.format("  name=%s", name));
+        log.info("START RHRPOC, id={}, name ={}", id, name);
         ResponseEntity<OutputDto> outputDtoResponseEntity = clientEasyBeFacade.reverseEndpointFromEasyBe(id, name);
-        logger.log(System.Logger.Level.INFO, String.format("  outPut=%s", outputDtoResponseEntity));
-        logger.log(System.Logger.Level.INFO, "END RHRPOC");
+        log.info("  output={}, END RHRPOC", outputDtoResponseEntity);
         return outputDtoResponseEntity;
     }
 
@@ -87,5 +102,15 @@ public class PocController implements PocRestApi {
     public ResponseEntity<OffsetDateTimeOutputDto> plusDaysForOffsetdatetime(OffsetDateTime offsetDateTime, Integer days) {
         DateTimeNew dateTimeNew = offsetDateTimeFacade.plusDaysForOffsetdatetime(new DateTimeDays().setOffsetDateTime(offsetDateTime).setDays(days));
         return ResponseEntity.ok(new OffsetDateTimeOutputDto(dateTimeNew.getOffsetDateTime()));
+    }
+
+    @Override
+    public ResponseEntity<StockItemsMovementsListRecDto> getStockItemsAndMovements(List<Long> stockTitles) {
+        StockItemsMovementsListRecDto stockItemsMovementsListDtoRec =
+                new StockItemsMovementsListRecDto(
+                        stockItemsMovementsDtoRecConverter.toDtos(
+                                stockFacade.getStockItemsAndMovements(
+                                        stockTitleRecConverter.toDomains(stockTitles))));
+        return ResponseEntity.ok(stockItemsMovementsListDtoRec);
     }
 }
