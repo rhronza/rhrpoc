@@ -15,14 +15,28 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity
-@Table(name = "STOCK", schema = "public")
+@Table(name = "stock", schema = "public")
 public class StockEntity implements Serializable {
 
     private static final long serialVersionUID = 2117236425856262477L;
 
+    public StockEntity() {
+    }
+
+    public StockEntity(Long id, String title, Integer area, List<StockItemEntity> stockItemEntities) {
+        this.id = id;
+        this.title = title;
+        this.area = area;
+        this.stockItemEntities = stockItemEntities;
+    }
+
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // on postgres sequence must be defined SEQUENCER, for example: CREATE SEQUENCE serial START 101
+    // https://stackoverflow.com/questions/38194364/how-to-get-list-of-sequence-names-in-postgres
+    // or type of id column: SERIAL and GenerationType.IDENTITY,
+    // https://www.tutorialspoint.com/postgresql/postgresql_using_autoincrement.htm
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "serial")
     private Long id;
 
     @Column(name = "title")
@@ -31,7 +45,7 @@ public class StockEntity implements Serializable {
     @Column(name = "area")
     private Integer area;
 
-    @OneToMany(mappedBy = "stockItemId.stockId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "stockEntity", cascade = CascadeType.ALL /*, orphanRemoval = true*/, fetch = FetchType.LAZY)
     private List<StockItemEntity> stockItemEntities;
 
     public Long getId() {
@@ -85,7 +99,7 @@ public class StockEntity implements Serializable {
                 .add("id=" + id)
                 .add("title='" + title + "'")
                 .add("area=" + area)
-//                .add("stockItems=" + stockItems)
+                .add("stockItems=" + stockItemEntities)
                 .toString();
     }
 }
