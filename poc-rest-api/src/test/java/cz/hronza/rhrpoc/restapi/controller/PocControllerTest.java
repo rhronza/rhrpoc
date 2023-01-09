@@ -21,7 +21,7 @@ import cz.hronza.rhrpoc.business_logic.service.OffsetDateTimeService;
 import cz.hronza.rhrpoc.business_logic.service.OffsetDateTimeServiceImpl;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
-import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
+import cz.hronza.rhrpoc.core.common.exception.RhrPocCannotBeDividedByZero;
 import cz.hronza.rhrpoc.core.common.exception.RhrPocExceptionHandler;
 import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
 import cz.hronza.rhrpoc.restapi.converter.StockConverter;
@@ -71,7 +71,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         StockConverter.class,
         StockItemsMovementsDtoRecConverter.class
 })
-
 class PocControllerTest extends AbstractControllerTest {
     public static final int RESULT_SUM = 28;
     public static final int RESULT_DIFFRENCE = 14;
@@ -89,7 +88,6 @@ class PocControllerTest extends AbstractControllerTest {
 
     @MockBean
     private StockFacadeImpl stockFacade;
-
 
 
     @Test
@@ -159,8 +157,8 @@ class PocControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.operation", is ("DIVIDE")))
-                .andExpect(jsonPath("$.result", is ("3")))
+                .andExpect(jsonPath("$.operation", is("DIVIDE")))
+                .andExpect(jsonPath("$.result", is("3")))
                 .andReturn();
         String content = mvcResult.getResponse().getContentAsString();
         JsonNode response = new ObjectMapper().registerModule(new JavaTimeModule()).readTree(content);
@@ -288,7 +286,7 @@ class PocControllerTest extends AbstractControllerTest {
                 return arg0 != null && arg1 != null ? new Result().setResult(arg0 - arg1).setOperationsEnum(OperationsEnum.DIFFERENCE) : null;
             if (OperationsEnum.DIVIDE.equals(currentOperation)) {
                 if (arg1 == 0)
-                    throw new RhrCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE, "message", "variableB is equals 0");
+                    throw new RhrPocCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE, "message", "variableB is equals 0");
                 return arg0 != null && arg1 != null ? new Result().setResult(arg0 / arg1).setOperationsEnum(OperationsEnum.DIVIDE) : null;
             }
             if (OperationsEnum.MULTIPLICATION.equals(currentOperation))

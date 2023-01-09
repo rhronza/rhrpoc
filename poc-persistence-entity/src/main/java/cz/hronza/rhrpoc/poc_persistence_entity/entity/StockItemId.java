@@ -1,5 +1,6 @@
 package cz.hronza.rhrpoc.poc_persistence_entity.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
@@ -9,7 +10,10 @@ import java.util.StringJoiner;
 public class StockItemId implements Serializable {
     private static final long serialVersionUID = 2002462088259277239L;
 
+
+    @Column(name="stock_id")
     private Long stockId;
+    @Column(name = "stored_item_id")
     private Long storedItemId;
 
     public StockItemId() {

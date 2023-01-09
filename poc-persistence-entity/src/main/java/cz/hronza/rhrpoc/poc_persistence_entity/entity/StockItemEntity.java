@@ -22,6 +22,20 @@ public class StockItemEntity implements Serializable {
 
     private static final long serialVersionUID = -7994504278623875431L;
 
+    public StockItemEntity() {
+    }
+
+    public StockItemEntity(StockItemId stockItemId, Long currentAmount, Long minimalAmount, OffsetDateTime dateTimeLastIssue, LocalDate dateLastStocking,  StockEntity stockEntity, StoredItemEntity storedItemEntity, List<WarehouseMovementEntity> warehouseMovementEntities) {
+        this.stockItemId = stockItemId;
+        this.currentAmount = currentAmount;
+        this.minimalAmount = minimalAmount;
+        this.dateTimeLastIssue = dateTimeLastIssue;
+        this.dateLastStocking = dateLastStocking;
+        this.stockEntity = stockEntity;
+        this.storedItemEntity = storedItemEntity;
+        this.warehouseMovementEntities = warehouseMovementEntities;
+    }
+
     @EmbeddedId
     private StockItemId stockItemId;
 
@@ -35,14 +49,14 @@ public class StockItemEntity implements Serializable {
     private OffsetDateTime dateTimeLastIssue;
 
     @Column(name = "date_last_stocking")
-    private Date dateLastStocking;
+    private LocalDate dateLastStocking;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "stockId", insertable=false, updatable=false)
+    @JoinColumn(name = "stock_id", insertable=false, updatable=false)
     private StockEntity stockEntity;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "storedItemId", insertable=false, updatable=false)
+    @JoinColumn(name="stored_item_id", insertable=false, updatable=false)
     private StoredItemEntity storedItemEntity;
 
     @OneToMany(mappedBy = "stockItemId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -72,11 +86,11 @@ public class StockItemEntity implements Serializable {
         this.dateTimeLastIssue = dateTimeLastIssue;
     }
 
-    public Date getDateLastStocking() {
+    public LocalDate getDateLastStocking() {
         return dateLastStocking;
     }
 
-    public void setDateLastStocking(Date dateLastStocking) {
+    public void setDateLastStocking(LocalDate dateLastStocking) {
         this.dateLastStocking = dateLastStocking;
     }
 
@@ -115,14 +129,35 @@ public class StockItemEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StockItemEntity)) return false;
-        StockItemEntity stockItemEntity = (StockItemEntity) o;
-        return getStockItemId().equals(stockItemEntity.getStockItemId()) && getCurrentAmount().equals(stockItemEntity.getCurrentAmount()) && Objects.equals(getMinimalAmount(), stockItemEntity.getMinimalAmount()) && Objects.equals(getDateTimeLastIssue(), stockItemEntity.getDateTimeLastIssue()) && Objects.equals(getDateLastStocking(), stockItemEntity.getDateLastStocking()) && Objects.equals(getStock(), stockItemEntity.getStock()) && Objects.equals(getStoredItem(), stockItemEntity.getStoredItem()) && Objects.equals(getWarehouseMovements(), stockItemEntity.getWarehouseMovements());
+        if (!(o instanceof StockItemEntity that)) return false;
+
+        if (getStockItemId() != null ? !getStockItemId().equals(that.getStockItemId()) : that.getStockItemId() != null)
+            return false;
+        if (getCurrentAmount() != null ? !getCurrentAmount().equals(that.getCurrentAmount()) : that.getCurrentAmount() != null)
+            return false;
+        if (getMinimalAmount() != null ? !getMinimalAmount().equals(that.getMinimalAmount()) : that.getMinimalAmount() != null)
+            return false;
+        if (getDateTimeLastIssue() != null ? !getDateTimeLastIssue().equals(that.getDateTimeLastIssue()) : that.getDateTimeLastIssue() != null)
+            return false;
+        if (getDateLastStocking() != null ? !getDateLastStocking().equals(that.getDateLastStocking()) : that.getDateLastStocking() != null)
+            return false;
+        if (!Objects.equals(stockEntity, that.stockEntity)) return false;
+        if (!Objects.equals(storedItemEntity, that.storedItemEntity))
+            return false;
+        return Objects.equals(warehouseMovementEntities, that.warehouseMovementEntities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getStockItemId(), getCurrentAmount(), getMinimalAmount(), getDateTimeLastIssue(), getDateLastStocking(), getStock(), getStoredItem(), getWarehouseMovements());
+        int result = getStockItemId() != null ? getStockItemId().hashCode() : 0;
+        result = 31 * result + (getCurrentAmount() != null ? getCurrentAmount().hashCode() : 0);
+        result = 31 * result + (getMinimalAmount() != null ? getMinimalAmount().hashCode() : 0);
+        result = 31 * result + (getDateTimeLastIssue() != null ? getDateTimeLastIssue().hashCode() : 0);
+        result = 31 * result + (getDateLastStocking() != null ? getDateLastStocking().hashCode() : 0);
+        result = 31 * result + (stockEntity != null ? stockEntity.hashCode() : 0);
+        result = 31 * result + (storedItemEntity != null ? storedItemEntity.hashCode() : 0);
+        result = 31 * result + (warehouseMovementEntities != null ? warehouseMovementEntities.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -133,9 +168,9 @@ public class StockItemEntity implements Serializable {
                 .add("minimalAmount=" + minimalAmount)
                 .add("dateTimeLastIssue=" + dateTimeLastIssue)
                 .add("dateLastStocking=" + dateLastStocking)
-                .add("stock=" + stockEntity)
-                .add("storedItem=" + storedItemEntity)
-                .add("warehouseMovements=" + warehouseMovementEntities)
+                .add("stockEntity=" + stockEntity)
+                .add("storedItemEntity=" + storedItemEntity)
+                .add("warehouseMovementEntities=" + warehouseMovementEntities)
                 .toString();
     }
 }

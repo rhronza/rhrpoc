@@ -1,6 +1,7 @@
 package cz.hronza.rhrpoc.business_logic.service;
 
-import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
+
+import cz.hronza.rhrpoc.core.common.exception.RhrPocCannotBeDividedByZero;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,8 +36,8 @@ class OperationServiceImplTest {
 
     @Test
     void divideNegativeTest() {
-        RhrCannotBeDividedByZero rhrCannotBeDividedByZero =
-                assertThrows(RhrCannotBeDividedByZero.class, () -> operationService.divide(15, 0));
+        RhrPocCannotBeDividedByZero rhrCannotBeDividedByZero =
+                assertThrows(RhrPocCannotBeDividedByZero.class, () -> operationService.divide(15, 0));
         assertEquals(OperationServiceImpl.CANNOT_BE_DIVIDED_BY_0_MESSAGE, rhrCannotBeDividedByZero.getMessage());
     }
 

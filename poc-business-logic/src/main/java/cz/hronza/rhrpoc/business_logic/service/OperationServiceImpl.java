@@ -1,6 +1,6 @@
 package cz.hronza.rhrpoc.business_logic.service;
 
-import cz.hronza.rhrpoc.core.common.exception.RhrCannotBeDividedByZero;
+import cz.hronza.rhrpoc.core.common.exception.RhrPocCannotBeDividedByZero;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +23,7 @@ public class OperationServiceImpl implements OperationService {
         if (b != 0)
             return a / b;
         else
-            throw new RhrCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE, "message", "variableB is equals 0");
+            throw new RhrPocCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE, "message", "variableB is equals 0");
     }
 
     @Override

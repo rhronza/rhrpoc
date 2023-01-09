@@ -8,6 +8,7 @@ import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.StockFacade;
 import cz.hronza.rhrpoc.core.api.api.PocRestApi;
+import cz.hronza.rhrpoc.core.api.dto.NewStockId;
 import cz.hronza.rhrpoc.core.api.dto.OffsetDateTimeOutputDto;
 import cz.hronza.rhrpoc.core.api.dto.OutputDto;
 import cz.hronza.rhrpoc.core.api.dto.ResultRecDto;
@@ -33,7 +34,6 @@ import java.util.List;
 public class PocController implements PocRestApi {
     private final ClientEasyBeFacade clientEasyBeFacade;
     private final CalculationFacade calculationFacade;
-
     private final OffsetDateTimeFacade offsetDateTimeFacade;
     private final StockFacade stockFacade;
     private final StockTitleRecConverter stockTitleRecConverter;
@@ -42,7 +42,7 @@ public class PocController implements PocRestApi {
     private final StockItemsMovementsDtoRecConverter stockItemsMovementsDtoRecConverter;
 
     private final ResultConverter resultConverter;
-    private static final System.Logger logger = System.getLogger(PocController.class.getSimpleName());
+    private final Logger log = LoggerFactory.getLogger(PocController.class);
 
 
     public PocController(CalculationFacade calculationFacade,
@@ -83,10 +83,11 @@ public class PocController implements PocRestApi {
     }
 
     @Override
-    public ResponseEntity<SellerAndSoldProductsDto> addSellerAndSoldPoducts(SellerAndSoldProductsDto sellerAndSoldProductsDto) throws RuntimeException {
-        // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(sellerAndSoldProductsDto) ;
+    public ResponseEntity<NewStockId> addNewStock(StockDtoRec stockDtoRec) {
+        // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(stockDtoRec) ;
+        NewStockId newStockId = new NewStockId(stockFacade.addNewStock(stockConverter.toDomain(stockDtoRec)));
 
-        return ResponseEntity.ok(sellerAndSoldProductsDto);
+        return new ResponseEntity<>(newStockId, HttpStatus.CREATED);
     }
 
     @Override
