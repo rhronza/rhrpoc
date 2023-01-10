@@ -12,7 +12,7 @@
 
 
 
-[3. RhrPoc-Easy-Be: light server, runs on port 8081, has one endpoint for demonstration http communication between servers(RhrPoc endpoint /reverse-endpoint-from-easy-be, Rhrpoc-Easy-Be endpoint / 
+[3. RhrPoc-Easy-Be: light server, runs on port 8081, has one endpoint for demonstration http communication between servers(RhrPoc endpoint /reverse-endpoint-from-easy-be, Rhrpoc-Easy-Be endpoint /reverse-endpoint 
 ](https://github.com/rhronza/rhrpoc-easy-be)
 
 
