@@ -22,13 +22,14 @@ import cz.hronza.rhrpoc.restapi.converter.StockItemsMovementsDtoRecConverter;
 import cz.hronza.rhrpoc.restapi.converter.StockTitleRecConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.time.OffsetDateTime;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 public class PocController implements PocRestApi {
@@ -87,7 +88,7 @@ public class PocController implements PocRestApi {
         // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(stockDtoRec) ;
         NewStockId newStockId = new NewStockId(stockFacade.addNewStock(stockConverter.toDomain(stockDtoRec)));
 
-        return new ResponseEntity<>(newStockId, HttpStatus.CREATED);
+        return new ResponseEntity<>(newStockId, CREATED);
     }
 
     @Override
