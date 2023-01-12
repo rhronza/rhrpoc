@@ -2,7 +2,7 @@ package cz.hronza.rhrpoc.restapi.restcontroller;
 
 import cz.hronza.rhrpoc.business_logic.domain.Result;
 import cz.hronza.rhrpoc.business_logic.facade.CalculationFacade;
-import cz.hronza.rhrpoc.core.api.api.PocRestApiOperation;
+import cz.hronza.rhrpoc.core.api.api.PocRestApiCalculation;
 import cz.hronza.rhrpoc.core.api.dto.ResultRecDto;
 import cz.hronza.rhrpoc.core.common.enums.MultipleOperationsEnum;
 import cz.hronza.rhrpoc.core.common.enums.OperationsEnum;
@@ -16,16 +16,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-public class PocOperationController implements PocRestApiOperation {
+public class PocCalculationController implements PocRestApiCalculation {
 
     private final CalculationFacade calculationFacade;
 
     private final ResultConverter resultConverter;
-    private final Logger log = LoggerFactory.getLogger(PocOperationController.class);
+    private final Logger log = LoggerFactory.getLogger(PocCalculationController.class);
 
 
-    public PocOperationController(CalculationFacade calculationFacade,
-                                  ResultConverter resultConverter) {
+    public PocCalculationController(CalculationFacade calculationFacade,
+                                    ResultConverter resultConverter) {
         this.calculationFacade = calculationFacade;
         this.resultConverter = resultConverter;
     }

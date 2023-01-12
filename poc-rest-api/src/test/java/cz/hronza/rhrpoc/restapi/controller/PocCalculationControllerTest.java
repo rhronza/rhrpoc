@@ -26,7 +26,7 @@ import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
 import cz.hronza.rhrpoc.restapi.converter.StockConverter;
 import cz.hronza.rhrpoc.restapi.converter.StockItemsMovementsDtoRecConverter;
 import cz.hronza.rhrpoc.restapi.converter.StockTitleRecConverter;
-import cz.hronza.rhrpoc.restapi.restcontroller.PocOperationController;
+import cz.hronza.rhrpoc.restapi.restcontroller.PocCalculationController;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @ContextConfiguration(classes = {
         ResultConverter.class,
-        PocOperationController.class,
+        PocCalculationController.class,
         ClientEasyBe.class,
         ClientEasyBeFacade.class,
         ClientEasyBeImpl.class,
@@ -71,7 +71,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         StockItemsMovementsDtoRecConverter.class,
 
 })
-class PocOperationControllerTest extends AbstractControllerTest {
+class PocCalculationControllerTest extends AbstractControllerTest {
     public static final int RESULT_SUM = 28;
     public static final int RESULT_DIFFRENCE = 14;
     public static final int RESULT_DIVIDE = 3;
@@ -89,7 +89,7 @@ class PocOperationControllerTest extends AbstractControllerTest {
 
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/calculation/v1/")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", VARIABLE_B_VALUE)
                         .param("operationsEnum", "SUM")
@@ -116,7 +116,7 @@ class PocOperationControllerTest extends AbstractControllerTest {
     void makeOperationDifferencePositiveTest() throws Exception {
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/calculation/v1")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", VARIABLE_B_VALUE)
                         .param("operationsEnum", "DIFFERENCE")
@@ -143,7 +143,7 @@ class PocOperationControllerTest extends AbstractControllerTest {
     void makeOperationDividePositiveTest() throws Exception {
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/calculation/v1")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", VARIABLE_B_VALUE)
                         .param("operationsEnum", "DIVIDE")
@@ -172,7 +172,7 @@ class PocOperationControllerTest extends AbstractControllerTest {
     void makeOperationDivideNegativeTest() throws Exception {
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/calculation/v1")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", "0")
                         .param("operationsEnum", "DIVIDE")
@@ -202,7 +202,7 @@ class PocOperationControllerTest extends AbstractControllerTest {
     void makeOperationMultiplicationPositiveTest() throws Exception {
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/calculation/v1")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", VARIABLE_B_VALUE)
                         .param("operationsEnum", "MULTIPLICATION")
@@ -224,7 +224,7 @@ class PocOperationControllerTest extends AbstractControllerTest {
     void makeOperationMultipleSumPositiveTest() throws Exception {
         universalMockMultiplicationCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get(String.format("/operation/v1/calculation/%s", "MULTIPLE_SUM"))
+        MvcResult mvcResult = mockMvc.perform(get(String.format("/calculation/v1/%s", "MULTIPLE_SUM"))
                         .param("numbers", "25")
                         .param("numbers", "3")
                         .param("numbers", "45")
@@ -251,7 +251,7 @@ class PocOperationControllerTest extends AbstractControllerTest {
     void makeOperationMultipleMultiplicationPositiveTest() throws Exception {
         universalMockMultiplicationCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get(String.format("/operation/v1/calculation/%s", "MULTIPLE_MULTIPLICATION"))
+        MvcResult mvcResult = mockMvc.perform(get(String.format("/calculation/v1/%s", "MULTIPLE_MULTIPLICATION"))
                         .param("numbers", "25")
                         .param("numbers", "3")
                         .param("numbers", "45")
