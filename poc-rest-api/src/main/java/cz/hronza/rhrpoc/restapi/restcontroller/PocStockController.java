@@ -36,7 +36,6 @@ public class PocStockController implements PocRestApiStock {
 
     @Override
     public ResponseEntity<NewStockId> addNewStock(StockDtoRec stockDtoRec) {
-        // String niceJson = new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(stockDtoRec) ;
         NewStockId newStockId = new NewStockId(stockFacade.addNewStock(stockConverter.toDomain(stockDtoRec)));
 
         return new ResponseEntity<>(newStockId, CREATED);

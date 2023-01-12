@@ -1,7 +1,7 @@
 package cz.hronza.rhrpoc.business_logic.service;
 
 import cz.hronza.rhpoc.easy_be.service.EasyBeClient;
-import cz.hronza.rhrpoc.core.api.dto.OutputDto;
+import cz.hronza.rhrpoc.core.api.dto.ReverseStringsOutput;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class ClientEasyBeImpl implements ClientEasyBe {
     }
 
     @Override
-    public ResponseEntity<OutputDto> reverseEndpointFromEasyBe(String id, String name) {
-        return easyBeClient.getReverseEndpoint(id, name);
+    public ResponseEntity<ReverseStringsOutput> reverseEndpointFromEasyBe(String string01, String string02) {
+        return easyBeClient.getReverseEndpoint(string01, string02);
     }
 }

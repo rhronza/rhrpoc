@@ -14,7 +14,6 @@ import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.ClientEasyBeFacadeImpl;
 import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacade;
 import cz.hronza.rhrpoc.business_logic.facade.OffsetDateTimeFacadeImpl;
-import cz.hronza.rhrpoc.business_logic.facade.StockFacadeImpl;
 import cz.hronza.rhrpoc.business_logic.service.ClientEasyBe;
 import cz.hronza.rhrpoc.business_logic.service.ClientEasyBeImpl;
 import cz.hronza.rhrpoc.business_logic.service.OffsetDateTimeService;
@@ -27,7 +26,7 @@ import cz.hronza.rhrpoc.restapi.converter.ResultConverter;
 import cz.hronza.rhrpoc.restapi.converter.StockConverter;
 import cz.hronza.rhrpoc.restapi.converter.StockItemsMovementsDtoRecConverter;
 import cz.hronza.rhrpoc.restapi.converter.StockTitleRecConverter;
-import cz.hronza.rhrpoc.restapi.restcontroller.PocController;
+import cz.hronza.rhrpoc.restapi.restcontroller.PocOperationController;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -52,7 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @ContextConfiguration(classes = {
         ResultConverter.class,
-        PocController.class,
+        PocOperationController.class,
         ClientEasyBe.class,
         ClientEasyBeFacade.class,
         ClientEasyBeImpl.class,
@@ -69,9 +68,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         OffsetDateTimeServiceImpl.class,
         StockTitleRecConverter.class,
         StockConverter.class,
-        StockItemsMovementsDtoRecConverter.class
+        StockItemsMovementsDtoRecConverter.class,
+
 })
-class PocControllerTest extends AbstractControllerTest {
+class PocOperationControllerTest extends AbstractControllerTest {
     public static final int RESULT_SUM = 28;
     public static final int RESULT_DIFFRENCE = 14;
     public static final int RESULT_DIVIDE = 3;
@@ -83,20 +83,13 @@ class PocControllerTest extends AbstractControllerTest {
     @MockBean
     private CalculationFacadeImpl calculationFacade;
 
-    @MockBean
-    private ClientEasyBeFacadeImpl clientEasyBeFacade;
-
-    @MockBean
-    private StockFacadeImpl stockFacade;
-
-
     @Test
     void makeOperationSumPositiveTest() throws Exception {
         // when(calculationFacade.calculate(20, 32, OperationsEnum.SUM)).thenReturn(new Result().setResult(RESULT_SUM).setOperationsEnum(OperationsEnum.SUM));
 
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", VARIABLE_B_VALUE)
                         .param("operationsEnum", "SUM")
@@ -123,7 +116,7 @@ class PocControllerTest extends AbstractControllerTest {
     void makeOperationDifferencePositiveTest() throws Exception {
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", VARIABLE_B_VALUE)
                         .param("operationsEnum", "DIFFERENCE")
@@ -150,7 +143,7 @@ class PocControllerTest extends AbstractControllerTest {
     void makeOperationDividePositiveTest() throws Exception {
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", VARIABLE_B_VALUE)
                         .param("operationsEnum", "DIVIDE")
@@ -179,7 +172,7 @@ class PocControllerTest extends AbstractControllerTest {
     void makeOperationDivideNegativeTest() throws Exception {
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", "0")
                         .param("operationsEnum", "DIVIDE")
@@ -209,7 +202,7 @@ class PocControllerTest extends AbstractControllerTest {
     void makeOperationMultiplicationPositiveTest() throws Exception {
         universalMockCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get("/calculation")
+        MvcResult mvcResult = mockMvc.perform(get("/operation/v1/calculation")
                         .param("variableA", VARIABLE_A_VALUE)
                         .param("variableB", VARIABLE_B_VALUE)
                         .param("operationsEnum", "MULTIPLICATION")
@@ -231,7 +224,7 @@ class PocControllerTest extends AbstractControllerTest {
     void makeOperationMultipleSumPositiveTest() throws Exception {
         universalMockMultiplicationCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get(String.format("/calculation/%s", "MULTIPLE_SUM"))
+        MvcResult mvcResult = mockMvc.perform(get(String.format("/operation/v1/calculation/%s", "MULTIPLE_SUM"))
                         .param("numbers", "25")
                         .param("numbers", "3")
                         .param("numbers", "45")
@@ -258,7 +251,7 @@ class PocControllerTest extends AbstractControllerTest {
     void makeOperationMultipleMultiplicationPositiveTest() throws Exception {
         universalMockMultiplicationCalculate();
 
-        MvcResult mvcResult = mockMvc.perform(get(String.format("/calculation/%s", "MULTIPLE_MULTIPLICATION"))
+        MvcResult mvcResult = mockMvc.perform(get(String.format("/operation/v1/calculation/%s", "MULTIPLE_MULTIPLICATION"))
                         .param("numbers", "25")
                         .param("numbers", "3")
                         .param("numbers", "45")
@@ -287,7 +280,7 @@ class PocControllerTest extends AbstractControllerTest {
             if (OperationsEnum.DIVIDE.equals(currentOperation)) {
                 if (arg1 == 0)
                     throw new RhrPocCannotBeDividedByZero(CANNOT_BE_DIVIDED_BY_0_MESSAGE, "message", "variableB is equals 0");
-                return arg0 != null && arg1 != null ? new Result().setResult(arg0 / arg1).setOperationsEnum(OperationsEnum.DIVIDE) : null;
+                return arg0 != null ? new Result().setResult(arg0 / arg1).setOperationsEnum(OperationsEnum.DIVIDE) : null;
             }
             if (OperationsEnum.MULTIPLICATION.equals(currentOperation))
                 return arg0 != null && arg1 != null ? new Result().setResult(arg0 * arg1).setOperationsEnum(OperationsEnum.MULTIPLICATION) : null;

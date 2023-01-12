@@ -1,9 +1,8 @@
 package cz.hronza.rhpoc.easy_be.service;
 
-import cz.hronza.rhrpoc.core.api.dto.OutputDto;
+import cz.hronza.rhrpoc.core.api.dto.ReverseStringsOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -28,7 +27,7 @@ public class EasyBeClientImpl implements EasyBeClient {
     public final String hostName;
     public final String token;
 
-    private static final String END_POINT_NAME = "/reverse-endpoint";
+    private static final String END_POINT = "/reverse-strings";
 
     private final Logger log = LoggerFactory.getLogger(EasyBeClientImpl.class);
 
@@ -43,22 +42,22 @@ public class EasyBeClientImpl implements EasyBeClient {
     }
 
     @Override
-    public ResponseEntity<OutputDto> getReverseEndpoint(String id, String name) {
+    public ResponseEntity<ReverseStringsOutput> getReverseEndpoint(String string01, String string02) {
         return restTemplate
-                .exchange(initUrlHost(id, name),
+                .exchange(initUrlHost(string01, string02),
                         HttpMethod.GET,
                         new HttpEntity<>("body", initHttpHeaders()),
-                        new ParameterizedTypeReference<OutputDto>() {
+                        new ParameterizedTypeReference<>() {
                         });
 
     }
 
-    private URI initUrlHost(String id, String name) {
+    private URI initUrlHost(String string01, String string02) {
         return UriComponentsBuilder
                 .fromHttpUrl(hostName)
-                .path(END_POINT_NAME)
-                .queryParam("id", id)
-                .queryParam("name", name)
+                .path(END_POINT)
+                .queryParam("string01", string01)
+                .queryParam("string02", string02)
                 .build()
                 .toUri();
     }
@@ -68,8 +67,9 @@ public class EasyBeClientImpl implements EasyBeClient {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.set("authorization", String.format("Bearer %s", token));
 
-        String correlationId = MDC.get("correlationId"); // tohle nic nevrací!!
-        correlationId = getRandomUUID(); // takže si to beru random UUID
+        String correlationId;
+        //correlationId = MDC.get("correlationId"); // tohle nic nevrací!
+        correlationId = getRandomUUID(); // takže to beru z random UUID
 
         log.info("correlationId={}", correlationId);
         httpHeaders.add("X-Correlation-Id", correlationId);
