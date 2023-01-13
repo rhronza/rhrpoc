@@ -14,6 +14,7 @@ import cz.hronza.rhrpoc.persistence.repository.StoredItemRepository;
 import cz.hronza.rhrpoc.poc_persistence_entity.entity.StockEntity;
 import cz.hronza.rhrpoc.poc_persistence_entity.entity.StockItemEntity;
 import cz.hronza.rhrpoc.poc_persistence_entity.entity.StockItemId;
+import cz.hronza.rhrpoc.poc_persistence_entity.entity.StoredItemEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,14 +83,14 @@ public class StockServiceImpl implements StockService {
                     stock.area(),
                     null
             ));
-            stock.itemIds().stream().forEach(storedItemId -> {
-                storedItemRepository
+            stock.itemIds().forEach(storedItemId -> {
+                StoredItemEntity itemId = storedItemRepository
                         .findById(storedItemId)
                         .orElseThrow(() -> new RhrPocNotFoundException(("not found"),
                                 new KeyValue("itemId", storedItemId.toString()))
                         );
                 stockItemRepository.save(new StockItemEntity(
-                        new StockItemId(saved.getId(), storedItemId),
+                        new StockItemId(saved.getId(), itemId.getId()),
                         0L,
                         100L,
                         null,
