@@ -88,8 +88,7 @@ public class StockServiceImpl implements StockService {
                         .orElseThrow(() -> new RhrPocNotFoundException(("not found"),
                                 new KeyValue("itemId", storedItemId.toString()))
                         );
-
-                StockItemEntity stockItemEntity = new StockItemEntity(
+                stockItemRepository.save(new StockItemEntity(
                         new StockItemId(saved.getId(), storedItemId),
                         0L,
                         100L,
@@ -98,8 +97,7 @@ public class StockServiceImpl implements StockService {
                         null,
                         null,
                         null
-                );
-                stockItemRepository.save(stockItemEntity);
+                ));
             });
             // catch except RhrPocNotFoundException (https://stackoverflow.com/a/20355868/6289936) :
         } catch (RhrPocNotFoundException ex) {
