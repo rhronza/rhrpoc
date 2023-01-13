@@ -7,7 +7,6 @@ import cz.hronza.rhrpoc.business_logic.domain.StockItemsMovementsRec;
 import cz.hronza.rhrpoc.business_logic.domain.StockItemsRec;
 import cz.hronza.rhrpoc.core.common.exception.KeyValue;
 import cz.hronza.rhrpoc.core.common.exception.RhrPocNotFoundException;
-import cz.hronza.rhrpoc.core.common.exception.RhrPocNotSavedException;
 import cz.hronza.rhrpoc.persistence.repository.StockItemRepository;
 import cz.hronza.rhrpoc.persistence.repository.StockRepository;
 import cz.hronza.rhrpoc.persistence.repository.StoredItemRepository;
@@ -73,44 +72,32 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE) // has impact to perfomance
+    @Transactional(isolation = Isolation.SERIALIZABLE) // has impact to performance
     public Long addNewStock(Stock stock) {
         StockEntity saved;
-        try {
-            saved = stockRepository.save(new StockEntity(
+        saved = stockRepository.save(new StockEntity(
+                null,
+                stock.title(),
+                stock.area(),
+                null
+        ));
+        stock.itemIds().forEach(storedItemId -> {
+            StoredItemEntity itemId = storedItemRepository
+                    .findById(storedItemId)
+                    .orElseThrow(() -> new RhrPocNotFoundException(("not found"),
+                            new KeyValue("itemId", storedItemId.toString()))
+                    );
+            stockItemRepository.save(new StockItemEntity(
+                    new StockItemId(saved.getId(), itemId.getId()),
+                    0L,
+                    100L,
                     null,
-                    stock.title(),
-                    stock.area(),
+                    null,
+                    null,
+                    null,
                     null
             ));
-            stock.itemIds().forEach(storedItemId -> {
-                StoredItemEntity itemId = storedItemRepository
-                        .findById(storedItemId)
-                        .orElseThrow(() -> new RhrPocNotFoundException(("not found"),
-                                new KeyValue("itemId", storedItemId.toString()))
-                        );
-                stockItemRepository.save(new StockItemEntity(
-                        new StockItemId(saved.getId(), itemId.getId()),
-                        0L,
-                        100L,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                ));
-            });
-            // catch except RhrPocNotFoundException (https://stackoverflow.com/a/20355868/6289936) :
-        } catch (RhrPocNotFoundException ex) {
-            throw new RhrPocNotFoundException(ex.getMessage(), ex.getParameters().toArray(new KeyValue[0]));
-        } catch (Exception ex) {
-            throw new RhrPocNotSavedException("stock not saved",
-                    new KeyValue("cause", ex.getCause().toString()),
-                    new KeyValue("title", stock.title()),
-                    new KeyValue("area", stock.area().toString()),
-                    new KeyValue("storedItems", stock.itemIds().toString())
-            );
-        }
+        });
         return saved.getId();
     }
 }
