@@ -14,8 +14,6 @@ import cz.hronza.rhrpoc.persistence.repository.StoredItemRepository;
 import cz.hronza.rhrpoc.poc_persistence_entity.entity.StockEntity;
 import cz.hronza.rhrpoc.poc_persistence_entity.entity.StockItemEntity;
 import cz.hronza.rhrpoc.poc_persistence_entity.entity.StockItemId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,15 +74,14 @@ public class StockServiceImpl implements StockService {
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE) // has impact to perfomance
     public Long addNewStock(Stock stock) {
-        StockEntity stockEntity, saved;
+        StockEntity saved;
         try {
-            stockEntity = new StockEntity(
+            saved = stockRepository.save(new StockEntity(
                     null,
                     stock.title(),
                     stock.area(),
                     null
-            );
-            saved = stockRepository.save(stockEntity);
+            ));
             stock.itemIds().stream().forEach(storedItemId -> {
                 storedItemRepository
                         .findById(storedItemId)
@@ -106,7 +103,7 @@ public class StockServiceImpl implements StockService {
             });
             // catch except RhrPocNotFoundException (https://stackoverflow.com/a/20355868/6289936) :
         } catch (RhrPocNotFoundException ex) {
-            throw new RhrPocNotFoundException(ex.getMessage(), ((RhrPocNotFoundException) ex).getParameters().toArray(new KeyValue[0]));
+            throw new RhrPocNotFoundException(ex.getMessage(), ex.getParameters().toArray(new KeyValue[0]));
         } catch (Exception ex) {
             throw new RhrPocNotSavedException("stock not saved",
                     new KeyValue("cause", ex.getCause().toString()),
