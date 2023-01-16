@@ -1,4 +1,4 @@
-## Personal presentation project by Roman Hronza
+## Demo project by Roman Hronza
 
 
 [1. RhrPoc: main application, is runable on port 8080, uses database
