@@ -107,9 +107,6 @@ class PocCalculationControllerTest extends AbstractControllerTest {
         JSONObject jsonObject = new JSONObject(niceJson); // šel by dosadit i content
         assertEquals(OperationsEnum.SUM.toString(), jsonObject.get("operation"));
         assertEquals(String.valueOf(RESULT_SUM), jsonObject.get("result"));
-
-        //TODO udelat assert na log (dělal jsem to v sml be)
-
     }
 
     @Test
@@ -135,8 +132,6 @@ class PocCalculationControllerTest extends AbstractControllerTest {
         JSONObject jsonObject = new JSONObject(niceJson); // šel by dosadit i content
         assertEquals(OperationsEnum.DIFFERENCE.toString(), jsonObject.get("operation"));
         assertEquals(String.valueOf(RESULT_DIFFRENCE), jsonObject.get("result"));
-
-        //TODO udělat assert na log (dělal jsem to v sml be)
     }
 
     @Test
@@ -164,8 +159,6 @@ class PocCalculationControllerTest extends AbstractControllerTest {
         JSONObject jsonObject = new JSONObject(niceJson); // šel by dosadit i content
         assertEquals(OperationsEnum.DIVIDE.toString(), jsonObject.get("operation"));
         assertEquals(String.valueOf(RESULT_DIVIDE), jsonObject.get("result"));
-
-        //TODO udělat assert na log (dělal jsem to v sml be)
     }
 
     @Test
@@ -194,8 +187,6 @@ class PocCalculationControllerTest extends AbstractControllerTest {
         JSONObject parameters = (JSONObject) errorItemsDtos.getJSONArray("parameters").get(0);
         assertEquals("message", parameters.get("key"));
         assertEquals("variableB is equals 0", parameters.get("value"));
-
-        //TODO udělat assert na log (dělal jsem to v sml be)
     }
 
     @Test
@@ -215,8 +206,6 @@ class PocCalculationControllerTest extends AbstractControllerTest {
 
         assertEquals(OperationsEnum.MULTIPLICATION.toString(), response.get("operation").asText());
         assertEquals(RESULT_MULTIPLICATION, response.get("result").asInt());
-
-        //TODO udělat assert na log (dělal jsem to v sml be)
     }
 
 
@@ -243,8 +232,6 @@ class PocCalculationControllerTest extends AbstractControllerTest {
         JSONObject jsonObject = new JSONObject(content);
         assertEquals(MultipleOperationsEnum.MULTIPLE_SUM.toString(), jsonObject.get("operation"));
         assertEquals(RESULT_SUM_MULTIPLICATION.toString(), jsonObject.get("result"));
-
-        //TODO udělat assert na log (dělal jsem to v sml be)
     }
 
     @Test
